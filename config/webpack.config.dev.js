@@ -96,7 +96,7 @@ module.exports = {
         loader: 'babel',
         query: require('./babel.dev')
       },
-
+      // Process sass files
       {
         test: /\.sass$/,
         include: paths.appSrc,

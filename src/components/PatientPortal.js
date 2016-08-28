@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Navbar from './Navbar';
+import CreateAccount from './CreateAccount';
 
 class PatientPortal extends Component {
   constructor () {
@@ -26,6 +27,8 @@ class PatientPortal extends Component {
       case 0:
       default:
         return <h2>Hello Zack!</h2>;
+      case 1:
+        return <CreateAccount />;
     }
   }
 

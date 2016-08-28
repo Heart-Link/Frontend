@@ -1,13 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import Navbar from './Navbar';
 import CreateAccount from './CreateAccount';
+import PatientInfo from './PatientInfo';
 
 class PatientPortal extends Component {
   constructor () {
     super();
 
     this.state = {
-      rightSide: 1,
+      rightSide: 2,
       leftSide: 0
     }
   }
@@ -29,6 +30,8 @@ class PatientPortal extends Component {
         return <h2>Hello Zack!</h2>;
       case 1:
         return <CreateAccount />;
+      case 2:
+        return <PatientInfo />;
     }
   }
 

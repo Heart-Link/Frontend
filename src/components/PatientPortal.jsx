@@ -19,7 +19,7 @@ class PatientPortal extends Component {
 
   leftSide () {
     return (
-      <div>TEST</div>
+      <div></div>
     );
   }
 

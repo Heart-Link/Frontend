@@ -27,7 +27,7 @@ class PatientPortal extends Component {
     switch (this.state.rightSide) {
       case 0:
       default:
-        return <h2>Hello Zack!</h2>;
+        return <h2>Hello World!</h2>;
       case 1:
         return <CreateAccount />;
       case 2:

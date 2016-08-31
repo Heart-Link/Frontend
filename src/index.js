@@ -10,6 +10,7 @@ import './styles/index.sass';
 
 const initialState = {
   uiReducer: {
+    alertMessage: null,
     leftSideComponent: null,
     leftSideData: {},
     rightSideComponent: null,
@@ -17,7 +18,7 @@ const initialState = {
   }
 };
 
-const store = createStore(reducer, initialState);
+const store = createStore(reducer, initialState, window.devToolsExtension && window.devToolsExtension());
 
 ReactDOM.render(
   <Provider store={store}>

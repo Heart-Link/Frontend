@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import Navbar from './Navbar';
-import CreateAccount from './CreateAccount';
-import PatientInfo from './PatientInfo';
+import Navbar from '../Navbar';
+import CreateAccount from '../CreateAccount';
+import PatientInfo from '../PatientInfo';
 
 class PatientPortal extends Component {
   constructor () {
@@ -55,11 +55,8 @@ class PatientPortal extends Component {
 }
 
 PatientPortal.propTypes = {
-  user: PropTypes.object
-};
-
-PatientPortal.defaultProps = {
-  user: {}
+  actions: PropTypes.func.isRequired,
+  ui: PropTypes.object.isRequired,
 };
 
 export default PatientPortal;

@@ -14,6 +14,11 @@ const uiReducer = (state = {}, action) => {
         rightSideData: action.payload.data
       });
 
+    case actionTypes.SEND_ALERT:
+      return Object.assign({}, state, {
+        alertMessage: action.payload.message
+      });
+
     default:
       return state;
   }

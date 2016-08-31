@@ -1,7 +1,9 @@
+const SEND_ALERT = 'SEND_ALERT';
 const SET_LEFT_SIDE = 'SET_LEFT_SIDE';
 const SET_RIGHT_SIDE = 'SET_RIGHT_SIDE';
 
 export { 
+  SEND_ALERT,
   SET_LEFT_SIDE,
   SET_RIGHT_SIDE
 };

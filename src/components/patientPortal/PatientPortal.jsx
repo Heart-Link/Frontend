@@ -1,44 +1,29 @@
 import React, { Component, PropTypes } from 'react';
 import Navbar from '../Navbar';
-import CreateAccount from '../CreateAccount';
-import PatientInfo from '../PatientInfo';
 
 class PatientPortal extends Component {
-  constructor () {
-    super();
-
-    this.state = {
-      rightSide: 2,
-      leftSide: 0
-    }
-  }
-
   alerts () {
     return null;
   }
 
   leftSide () {
-    return (
-      <div></div>
-    );
+    if (this.props.ui.leftSideComponent === null) return <h1>ERROR</h1>;
+    
+    const LeftSide = this.props.ui.leftSideComponent;
+    return <LeftSide data={this.props.ui.leftSideData} />
   }
 
   rightSide () {
-    switch (this.state.rightSide) {
-      case 0:
-      default:
-        return <h2>Hello World!</h2>;
-      case 1:
-        return <CreateAccount />;
-      case 2:
-        return <PatientInfo />;
-    }
+    if (this.props.ui.rightSideComponent === null) return <h2>Hello Zack!</h2>;
+
+    const RightSide = this.props.ui.rightSideComponent;
+    return <RightSide data={this.props.ui.rightSideData} />
   }
 
   render () {
     return (
       <div className="PatientPortal">
-        <Navbar />
+        <Navbar actions={this.props.actions} />
 
         <div className="PatientPortal-leftSide">
           {this.leftSide()}
@@ -55,7 +40,7 @@ class PatientPortal extends Component {
 }
 
 PatientPortal.propTypes = {
-  actions: PropTypes.func.isRequired,
+  actions: PropTypes.object.isRequired,
   ui: PropTypes.object.isRequired,
 };
 

@@ -10,7 +10,10 @@ import './styles/index.sass';
 
 const initialState = {
   uiReducer: {
-    rightSide: false
+    leftSideComponent: null,
+    leftSideData: {},
+    rightSideComponent: null,
+    rightSideData: {},
   }
 };
 

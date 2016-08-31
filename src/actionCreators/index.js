@@ -1,7 +1,7 @@
 import * as actionTypes from '../actionTypes';
 
-const setRightSide = () => {
-  return { type: actionTypes.SET_RIGHT_SIDE };
+const setRightSide = (payload) => {
+  return { type: actionTypes.SET_RIGHT_SIDE, payload };
 };
 
 const actionCreators = {

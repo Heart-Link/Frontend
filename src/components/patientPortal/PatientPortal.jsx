@@ -13,7 +13,7 @@ class PatientPortal extends Component {
   alerts () {
     if (!this.props.ui.alertMessage) return;
 
-    return <Alert message={this.props.alertMessage}
+    return <Alert message={this.props.ui.alertMessage}
                   sendAlert={this.props.actions.sendAlert} />;
   }
 
@@ -32,10 +32,12 @@ class PatientPortal extends Component {
     if (!this.props.ui.rightSideComponent) return <h2>Hello Zack!</h2>;
 
     const RightSide = this.props.ui.rightSideComponent;
-    return <RightSide data={this.props.ui.rightSideData} />
+    return <RightSide actions={this.props.actions}
+                      data={this.props.ui.rightSideData} />
   }
 
   render () {
+    console.log(this.props, "PatientPortal");
     return (
       <div className="PatientPortal">
         {this.alerts()}

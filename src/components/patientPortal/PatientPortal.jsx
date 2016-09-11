@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Alert from '../Alert';
 import Navbar from '../Navbar';
-
+import PatientList from '../PatientList';
 
 class PatientPortal extends Component {
   constructor () {
@@ -22,18 +22,17 @@ class PatientPortal extends Component {
   }
 
   leftSide () {
-    if (!this.props.ui.leftSideComponent) return <button onClick={this.handleClick}>Alert</button>;
+    if (!this.props.ui.leftSideComponent) return <PatientList {...this.props} />;
     
     const LeftSide = this.props.ui.leftSideComponent;
-    return <LeftSide data={this.props.ui.leftSideData} />
+    return <LeftSide {...this.props} />
   }
 
   rightSide () {
     if (!this.props.ui.rightSideComponent) return <h2>Hello Zack!</h2>;
 
     const RightSide = this.props.ui.rightSideComponent;
-    return <RightSide actions={this.props.actions}
-                      data={this.props.ui.rightSideData} />
+    return <RightSide {...this.props} />
   }
 
   render () {

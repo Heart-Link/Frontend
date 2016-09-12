@@ -1,8 +1,9 @@
 .PatientPortal
   background: linear-gradient(141deg, $PurpleLight 7%, $PurpleDark 75%)
   display: float
-  height: 100vh
-  overflow: hidden
+  height: 100%
+  min-height: 100vh
+  overflow-x: hidden
   width: 100vw
 
 .PatientPortal-leftSide
@@ -10,13 +11,15 @@
   box-shadow: 0px 0px 16px 0px $Black
   height: 100%
   float: left
+  min-height: 100vh
   padding: 9rem 4rem 4rem 4rem
   position: relative
   width: 60%
 
 .PatientPortal-rightSide
-  height: 100%
   float: right
+  height: 100%
+  min-height: 100vh
   padding: 9rem 4rem 4rem 4rem
   position: relative
   width: 40%

@@ -2,53 +2,30 @@ import React, { Component, PropTypes } from 'react';
 import Alert from '../Alert';
 import Navbar from '../Navbar';
 import PatientList from '../PatientList';
+import Menu from '../Menu';
 
 class PatientPortal extends Component {
   constructor () {
     super();
+    this.state ={
+      showMenu: false
+    };
+}
 
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  alerts () {
-    if (!this.props.ui.alertMessage) return;
-
-    return <Alert message={this.props.ui.alertMessage}
-                  sendAlert={this.props.actions.sendAlert} />;
-  }
-
-  handleClick () {
-    this.props.actions.sendAlert({message: 'This is a test alert.'});
-  }
-
-  leftSide () {
-    if (!this.props.ui.leftSideComponent) return <PatientList {...this.props} />;
-    
-    const LeftSide = this.props.ui.leftSideComponent;
-    return <LeftSide {...this.props} />
-  }
-
-  rightSide () {
-    if (!this.props.ui.rightSideComponent) return <h2>Hello Zack!</h2>;
-
-    const RightSide = this.props.ui.rightSideComponent;
-    return <RightSide {...this.props} />
-  }
+_navBarClickHandler(){
+  this.setState({showMenu: !this.state.showMenu});
+}
 
   render () {
     console.log(this.props, "PatientPortal");
+    let menuIsVisible = <PatientList />;
+    if(this.state.showMenu){
+      menuIsVisible = <Menu />;
+    }
     return (
       <div className="PatientPortal">
-        {this.alerts()}
-        <Navbar actions={this.props.actions} />
-
-        <div className="PatientPortal-leftSide">
-          {this.leftSide()}
-        </div>
-        
-        <div className="PatientPortal-rightSide">
-          {this.rightSide()}
-        </div>
+        <Navbar actions={this.props.actions} handleNavBarClick = {this._navBarClickHandler}/>
+        {menuIsVisible}
       </div>
     );
   }

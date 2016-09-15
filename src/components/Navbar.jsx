@@ -4,30 +4,20 @@ import CreateAccount from './CreateAccount';
 class Navbar extends Component {
   constructor () {
     super();
-
-    this.createAccountHandler = this.createAccountHandler.bind(this);
-  }
-
-  createAccountHandler () {
-    this.props.actions.setRightSide({
-      component: CreateAccount,
-      data: null
-    });
   }
 
   render () {
     return (
       <div className="Navbar">
         <div className="Navbar-logo">
-          <h3>Heart Link</h3>
+          <h6>Heart Link</h6>
         </div>
-
         <div className="Navbar-navigation">
-          <ul>
-            <li><a onClick={this.createAccountHandler}>Create Account</a></li>
-            <li><a>Profile</a></li>
-            <li><a>Log Out</a></li>
-          </ul>
+          <div className="Hamburger" onClick={this.props.handleNavBarClick.bind(this)}>
+            <div className="Line"></div>
+            <div className="Line"></div>
+            <div className="Line"></div>
+          </div>
         </div>
       </div>
     );

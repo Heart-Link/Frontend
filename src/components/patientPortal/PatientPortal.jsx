@@ -18,14 +18,10 @@ _navBarClickHandler(){
 
   render () {
     console.log(this.props, "PatientPortal");
-    let menuIsVisible = <PatientList />;
-    if(this.state.showMenu){
-      menuIsVisible = <Menu />;
-    }
     return (
       <div className="PatientPortal">
         <Navbar actions={this.props.actions} handleNavBarClick = {this._navBarClickHandler}/>
-        {menuIsVisible}
+        <PatientList />
       </div>
     );
   }

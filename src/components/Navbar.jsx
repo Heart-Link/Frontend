@@ -13,10 +13,10 @@ class Navbar extends Component {
           <h6>Heart Link</h6>
         </div>
         <div className="Navbar-navigation">
-          <div className="Hamburger" onClick={this.props.handleNavBarClick.bind(this)}>
-            <div className="Line"></div>
-            <div className="Line"></div>
-            <div className="Line"></div>
+          <div className="Hamburger" onClick={this.props.handleNavBarClick}>
+            <div className="Line1"></div>
+            <div className="Line2"></div>
+            <div className="Line3"></div>
           </div>
         </div>
       </div>

@@ -1,11 +1,11 @@
 import React from 'react';
 
-const StatusIcons = () => {
+const StatusIcons = (props) => {
   return (
     <div className="StatusIcons">
-      <div className="GoodIcon"/> <span>12</span> 
-      <div className="MediumIcon" /> <span>10</span>
-      <div className="WarningIcon" /> <span>13</span>
+      <div className="GoodIcon"/> <span>{props.good}</span> 
+      <div className="MediumIcon" /> <span>{props.medium}</span>
+      <div className="WarningIcon" /> <span>{props.warning}</span>
     </div>
   );
 };

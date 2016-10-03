@@ -1,4 +1,14 @@
 import * as actionTypes from '../actionTypes';
+import UserService from '../services/UserService';
+
+const userService = new UserService();
+
+const createAccount = (payload) => {
+  return (dispatch) => {
+    userService.createPatient(payload);
+    dispatch({ type: actionTypes.CREATE_ACCOUNT, payload });
+  }
+};
 
 const sendAlert = (payload) => {
   return { type: actionTypes.SEND_ALERT, payload };
@@ -13,6 +23,7 @@ const setLeftSide = (payload) => {
 };
 
 const actionCreators = {
+  createAccount,
   sendAlert,
   setRightSide,
   setLeftSide

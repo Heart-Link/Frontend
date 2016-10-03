@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Alert from '../Alert';
 import Navbar from '../Navbar';
 import PatientList from '../PatientList';
+import Detail from '../Detail';
 
 class PatientPortal extends Component {
   constructor () {
@@ -22,6 +23,7 @@ class PatientPortal extends Component {
   }
 
   leftSide () {
+    //if (!this.props.ui.leftSideComponent) return <Detail />;
     if (!this.props.ui.leftSideComponent) return <PatientList {...this.props} />;
     
     const LeftSide = this.props.ui.leftSideComponent;

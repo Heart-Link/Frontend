@@ -18,6 +18,11 @@ class PatientTable extends Component {
     };
   }
 
+  componentWillUpdate (nextProps) {
+    if(this.props.patientList === nextProps.patientList) return;
+    this.setState({ patientList: nextProps.patientList });
+  }
+
   patientIDClickHandler (event) {
     event.preventDefault();
 
@@ -105,16 +110,31 @@ class PatientTable extends Component {
 
     if(this.state.sort === 'status') {
       if (this.state.direction === 0) {
-        this.setState({ direction: 1 });
+        this.setState({ 
+          direction: 1,
+          patientList: this.state.patientList.sort((a, b) => { 
+            return b.status - a.status 
+          })
+        });
+
       } else {
-        this.setState({ direction: 0 });
+        this.setState({ 
+          direction: 0,
+          patientList: this.state.patientList.sort((a, b) => { 
+            return a.status - b.status 
+          })
+        });
       }
+
       return;
     }
 
     this.setState({
       sort: 'status',
-      direction: 0
+      direction: 0,
+      patientList: this.state.patientList.sort((a, b) => { 
+                     return a.status - b.status 
+                   })
     });
   }
 
@@ -241,11 +261,12 @@ class PatientTable extends Component {
   }
 
   renderRows () {
-    if (this.state.patientList.length === 0) return <h2>Patient List Empty</h2>;
+    if (this.state.patientList.length === 0) return <h3>No patients found</h3>;
 
     return (this.state.patientList).map((row, index) => {
       return <TableRow key={index}
-                       patient={row} />;
+                       patient={row} 
+                       setRightSide={this.props.setRightSide} />;
     });
   }
 

@@ -14,12 +14,15 @@ class CreateAccount extends Component {
     this.handleLastNameChange = this.handleLastNameChange.bind(this);
     this.handlePatientIDChange = this.handlePatientIDChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handleBloodPressureChange = this.handleBloodPressureChange.bind(this);
+    this.handleBloodPressureHighChange = this.handleBloodPressureHighChange.bind(this);
+    this.handleBloodPressureLowChange = this.handleBloodPressureLowChange.bind(this);
     this.handleStepsChange = this.handleStepsChange.bind(this);
     this.handleExerciseChange = this.handleExerciseChange.bind(this);
     this.handleHeartRateChange = this.handleHeartRateChange.bind(this);
     this.handleAlcoholIntakeChange = this.handleAlcoholIntakeChange.bind(this);
     this.handleWeightChange = this.handleWeightChange.bind(this);
+    this.handleMaleSexChange = this.handleMaleSexChange.bind(this);
+    this.handleFemaleSexChange = this.handleFemaleSexChange.bind(this);
 
     this.state = {
       isLoading: false,
@@ -33,8 +36,10 @@ class CreateAccount extends Component {
       patientIDValid: false,
       email: '',
       emailValid: false,
-      bloodPressure: '',
-      bloodPressureValid: false,
+      bloodPressureHigh: '',
+      bloodPressureHighValid: false,
+      bloodPressureLow: '',
+      bloodPressureLowValid: false,
       steps: '',
       stepsValid: false,
       exercise: '',
@@ -45,20 +50,43 @@ class CreateAccount extends Component {
       alcoholIntakeValid: false,
       weight: '',
       weightValid: false,
-      startDate: moment()
+      dob: '',
+      startDate: moment(),
+      sex: '',
+      sexValid: false,
     }
   }
 
   componentDidUpdate () {
     if (this.state.formValid) {
-      console.log("API CALL HERE TO SUBMIT FORM");
+      this.props.actions.createAccount({
+        data: {
+          dob: this.state.dob,
+          emrid: this.state.patientID,
+          email: this.state.email,
+          exercisetime: this.state.exercise,
+          firstname: this.state.firstName,
+          gender: this.state.sex,
+          lastname: this.state.lastName,
+          managerid: 'abc',
+          patientemail: this.state.email,
+          providerid: 'def',
+          status: 5,
+          steps: this.state.steps,
+          vitalsalcohol: this.state.alcoholIntake,
+          vitalsbph: this.state.bloodPressureHigh,
+          vitalsbpl: this.state.bloodPressureLow,
+          vitalsweight: this.state.weight,
+        }
+      });
+
       this.props.actions.setRightSide({
         component: null,
         data: null
       });
     }
 
-    if (this.state.formAttempted && !this.state.formValid && this.state.isLoading) {
+    else if (this.state.formAttempted && !this.state.formValid && this.state.isLoading) {
       this.setState({
         formValid: this.formValid(),
         isLoading: false
@@ -90,12 +118,14 @@ class CreateAccount extends Component {
       lastNameValid: this.validateText(this.state.lastName),
       patientIDValid: this.validateNumber(this.state.patientID),
       emailValid: this.validateEmail(),
-      bloodPressureValid: this.validateNumber(this.state.bloodPressure),
+      bloodPressureHighValid: this.validateNumber(this.state.bloodPressureHigh),
+      bloodPressureLowValid: this.validateNumber(this.state.bloodPressureLow),
       stepsValid: this.validateNumber(this.state.steps),
       exerciseValid: this.validateNumber(this.state.exercise),
       heartRateValid: this.validateNumber(this.state.heartRate),
       alcoholIntakeValid: this.validateNumber(this.state.alcoholIntake),
       weightValid: this.validateNumber(this.state.weight),
+      sexValid: this.validateSex()
     });
   }
 
@@ -105,12 +135,14 @@ class CreateAccount extends Component {
       this.state.lastNameValid === true &&
       this.state.patientIDValid === true &&
       this.state.emailValid === true &&
-      this.state.bloodPressureValid === true &&
+      this.state.bloodPressureHighValid === true &&
+      this.state.bloodPressureLowValid === true &&
       this.state.stepsValid === true &&
       this.state.exerciseValid === true &&
       this.state.heartRateValid === true &&
       this.state.alcoholIntakeValid === true &&
-      this.state.weightValid === true
+      this.state.weightValid === true &&
+      this.state.sexValid === true
     );
   }
 
@@ -132,6 +164,11 @@ class CreateAccount extends Component {
     return regex.test(this.state.email);
   }
 
+  validateSex () {
+    if (this.state.sex) return true;
+    return false;
+  }
+
   handleFirstNameChange (event) {
     this.setState({ firstName: event.target.value });
   }
@@ -145,15 +182,19 @@ class CreateAccount extends Component {
   }
 
   handleDateChange (date) {
-    this.setState({ startDate: date });
+    this.setState({ dob: this.state.startDate.format() });
   }
 
   handleEmailChange (event) {
     this.setState({ email: event.target.value });
   }
 
-  handleBloodPressureChange (event) {
-    this.setState({ bloodPressure: event.target.value });
+  handleBloodPressureHighChange (event) {
+    this.setState({ bloodPressureHigh: event.target.value });
+  }
+
+  handleBloodPressureLowChange (event) {
+    this.setState({ bloodPressureLow: event.target.value });
   }
 
   handleStepsChange (event) {
@@ -175,6 +216,26 @@ class CreateAccount extends Component {
   handleWeightChange (event) {
     this.setState({ weight: event.target.value });
   }
+
+  handleMaleSexChange () {
+    this.setState({ sex: 'male' });
+  }
+
+  handleFemaleSexChange () {
+    this.setState({ sex: 'female' });
+  }
+
+  maleClassNames () {
+    if (this.state.sex === 'male') return 'sexSelector_selected';
+    return 'sexSelector_radio';
+  }
+
+  femaleClassNames () {
+    if (this.state.sex === 'female') return 'sexSelector_selected';
+    return 'sexSelector_radio';
+  }
+
+
 
   render () {
     return (
@@ -223,17 +284,31 @@ class CreateAccount extends Component {
                      ref="provider" />
 
             <h6>Sex:</h6>
+              <div className="sexSelector" onClick={this.handleMaleSexChange}>
+                <div className={this.maleClassNames()}/>
+                <span>Male</span>
+              </div>
+              <div className="sexSelector" onClick={this.handleFemaleSexChange}>
+                <div className={this.femaleClassNames()}/>
+                <span>Female</span>
+              </div>
           </div>
         </div>
 
         <div className="CreateAccount-HealthInfo Card">
           <div className="Card-left">
             <h6 className="noMargin">Blood Pressure:</h6>
-              <input className={(this.state.formAttempted && !this.state.bloodPressureValid) ? "small-input input-error" : "small-input"}
+              <input className={(this.state.formAttempted && !this.state.bloodPressureHighValid) ? "small-input-bp input-error" : "small-input-bp"}
                      type="text"
-                     value={this.state.bloodPressure}
-                     onChange={this.handleBloodPressureChange}
-                     ref="bloodPressure" />
+                     value={this.state.bloodPressureHigh}
+                     onChange={this.handleBloodPressureHighChange}
+                     ref="bloodPressureHigh" />
+              <span className="bpSeperator">/</span>
+              <input className={(this.state.formAttempted && !this.state.bloodPressureLowValid) ? "small-input-bp_low input-error" : "small-input-bp_low"}
+                     type="text"
+                     value={this.state.bloodPressureLow}
+                     onChange={this.handleBloodPressureLowChange}
+                     ref="bloodPressureLow" />
               <span>(mmHg)</span>
 
             <h6>Steps:</h6>

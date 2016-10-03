@@ -6,7 +6,7 @@ const uiReducer = (state = {}, action) => {
       return Object.assign({}, state, {
         leftSideComponent: action.payload.component,
         leftSideData: action.payload.data
-      })
+      });
 
     case actionTypes.SET_RIGHT_SIDE:
       return Object.assign({}, state, {

@@ -9,6 +9,11 @@ class Navbar extends Component {
   }
 
   createAccountHandler () {
+    this.props.actions.setLeftSide({
+      component: null,
+      data: null
+    });
+    
     this.props.actions.setRightSide({
       component: CreateAccount,
       data: null
@@ -25,7 +30,6 @@ class Navbar extends Component {
         <div className="Navbar-navigation">
           <ul>
             <li><a onClick={this.createAccountHandler}>Create Account</a></li>
-            <li><a>Profile</a></li>
             <li><a>Log Out</a></li>
           </ul>
         </div>

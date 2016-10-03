@@ -6,12 +6,22 @@
     background: rgba($Red, .1)
     border-bottom: 2px solid $Red
 
-.CreateAccount-HealthInfo
+.CreateAccount-HealthInfo, .CreateAccount-PatientInfo
   h6
     color: $PurpleDark
   .small-input
     width: 50%
     display: inline-block
+  .small-input-bp
+    width: 20%
+    display: inline-block
+  .small-input-bp_low
+    width: 20%
+    margin-left: 0
+    display: inline-block
+  .bpSeperator
+    font-size: 3rem
+    padding: 0 1rem
   .input-error
     background: rgba($Red, .1)
     border-bottom: 2px solid $Red
@@ -19,4 +29,44 @@
     display: inline-block
     padding-left: 1rem
     color: $GreenLight
+  .sexSelector
+    margin: 1rem 3rem 0 0 
+    display: inline-block
+    span
+      vertical-align: middle
+    .sexSelector_radio
+      background-color: lighten($GrayLight, 30%)
+      border: .1rem solid $GrayLight
+      cursor: pointer
+      display: inline-block
+      height: 2.1rem
+      vertical-align: middle
+      width: 2.1rem
+    .sexSelector_selected
+      background-color: lighten($GrayLight, 30%)
+      border: .1rem solid $GreenLight
+      cursor: pointer
+      display: inline-block
+      height: 2.1rem
+      position: relative
+      vertical-align: middle
+      width: 2.1rem
+      &:before
+        background-color: $GreenLight
+        content: ''
+        height: 3px
+        left: 5px
+        position: absolute
+        top: 8px
+        transform: rotate(-60deg)
+        width: 13px
+      &:after
+        background-color: $GreenLight
+        content: ''
+        height: 3px
+        left: 3px
+        position: absolute
+        top: 12px
+        transform: rotate(30deg)
+        width: 7px
 

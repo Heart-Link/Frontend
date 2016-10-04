@@ -5,9 +5,9 @@ class Menu extends Component{
     return(
       <div className="Menu">
         <ul>
-          <li><a href="#">Full Patient List</a></li>
-          <li><a href="#">Nurse Recommended</a></li>
-          <li><a href="#">Log Out</a></li>
+          <li onClick={this.props.handleFullListClick}>Full Patient List</li>
+          <li onClick={this.props.handleNurseClick}>Nurse Recommended</li>
+          <li>Log Out</li>
         </ul>
       </div>
     );

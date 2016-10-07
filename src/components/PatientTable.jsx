@@ -5,32 +5,37 @@ class PatientTable extends Component{
 
   getPatients(){
     if(this.props.listOfPatients.length === 0){
-      return <h4>No Patients Found</h4>;
+      return <h4>No Patients Found</h4>
     }
     else{
-      return (
-        <div className="SortingRow">
-          <p className="NameSort" onClick={this.props.sortByName}></p>
-          <p className="StatusSort" onClick={this.props.sortByStatus}></p>
-        </div>
+      return(
         this.props.listOfPatients.map((patient) =>{
-          return<PatientRow key={patient.key} firstname={patient.firstname} lastname={patient.lastname} status={patient.status}/>
-        });
+          return <PatientRow key={patient.key}
+                    firstname={patient.firstname}
+                    lastname={patient.lastname}
+                    status={patient.status}
+                    patientSummaryClick={this.props.patientSummaryClick}/>;
+        })
       );
     }
   }
 
   render(){
-    return (
+    return(
       <div className="PatientTable">
+        <div className="SortingRow">
+          <p className="NameSort" onClick={this.props.sortByName}>Patient Name</p>
+          <p className="StatusSort" onClick={this.props.sortByStatus}>Status</p>
+        </div>
         {this.getPatients()}
       </div>
-    )
+    );
   }
 }
 
 PatientTable.propTypes ={
-  listofPatients: PropTypes.arrayOf(PropTypes.object)
+  listOfPatients: PropTypes.arrayOf(PropTypes.object),
+  patientSummaryClick: PropTypes.func
 };
 
 export default PatientTable;

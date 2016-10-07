@@ -4,7 +4,7 @@ class PatientRow extends Component{
   render(){
     return(
       <div className="PatientRow">
-        <p className="PatientName">{this.props.firstname + " " + this.props.lastname}</p>
+        <p className="PatientName" onClick={this.props.patientSummaryClick}>{this.props.firstname + " " + this.props.lastname}</p>
         <p className="PatientStatus">{this.props.status}</p>
       </div>
     );
@@ -13,7 +13,8 @@ class PatientRow extends Component{
 PatientRow.propTypes = {
   firstname: PropTypes.string.isRequired,
   lastname: PropTypes.string.isRequired,
-  status: PropTypes.number.isRequired
+  status: PropTypes.number.isRequired,
+  patientSummaryClick: PropTypes.func
 };
 
 export default PatientRow;

@@ -1,17 +1,37 @@
 import React, { Component, PropTypes } from 'react';
 import DataTable from './DataTable';
+import {XYPlot, XAxis, YAxis, HorizontalGridLines, AreaSeries} from 'react-vis';
 
 class Detail extends Component {
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
 
     this.closeDetail = this.closeDetail.bind(this);
     this.changeDropdown = this.changeDropdown.bind(this);
+    this.onClickOverall = this.onClickOverall.bind(this);
+    this.onClickBloodPressure = this.onClickBloodPressure.bind(this);
+    this.onClickHeartRate = this.onClickHeartRate.bind(this);
+    this.onClickStress = this.onClickStress.bind(this);
+    this.onClickAlcohol = this.onClickAlcohol.bind(this);
+    this.onClickSmoking = this.onClickSmoking.bind(this);
+    this.onClickWeight = this.onClickWeight.bind(this);
+    this.onClickDaily = this.onClickDaily.bind(this);
 
     this.state = {
       currentData: 'Overall',
-      dropdownOpen: false
+      dropdownOpen: false,
+      bloodPressureData: null,
+      heartRateData: null,
+      stressData: null,
+      alcoholData: null,
+      smokingData: null,
+      weightData: null,
+      dailyData: null,
     }
+  }
+
+  noDataAvailable() {
+    this.props.actions.sendAlert({ message: 'Data not currently available for selected user.'});
   }
   
   closeDetail () {
@@ -25,11 +45,115 @@ class Detail extends Component {
     this.setState({ dropdownOpen: !this.state.dropdownOpen });
   }
 
+  onClickOverall () {
+    this.setState({
+      currentData: 'Overall',
+      dropdownOpen: false
+    });
+  }
+
+  onClickBloodPressure () {
+    if(!this.props.ui.leftSideData || this.props.ui.leftSideData.length === 0) {
+      this.noDataAvailable();
+      return;
+    }
+
+    this.setState({
+      currentData: 'Blood Pressure',
+      dropdownOpen: false,
+      heartRateData: this.props.ui.leftSideData.map((dataEntry, index) => {
+                        return { x: index, y: dataEntry.bpHigh}
+                     })
+    });
+  }
+
+  onClickHeartRate () {
+    if(!this.props.ui.leftSideData || this.props.ui.leftSideData.length === 0) {
+      this.noDataAvailable();
+      return;
+    }
+
+    this.setState({
+      currentData: 'Heart Rate',
+      dropdownOpen: false,
+      heartRateData: this.props.ui.leftSideData.map((dataEntry, index) => {
+                        return { x: index, y: dataEntry.averageHR }
+                     })
+    });
+  }
+
+  onClickStress () {
+    if(!this.props.ui.leftSideData || this.props.ui.leftSideData.length === 0) {
+      this.noDataAvailable();
+      return;
+    }
+
+    this.setState({
+      currentData: 'Stress',
+      dropdownOpen: false,
+      stressData: this.props.ui.leftSideData.map((dataEntry, index) => {
+                    return { x: index, y: dataEntry.stressLevel }
+                  })
+    });
+  }
+
+  onClickAlcohol () {
+    if(!this.props.ui.leftSideData || this.props.ui.leftSideData.length === 0) {
+      this.noDataAvailable();
+      return;
+    }
+
+    this.setState({
+      currentData: 'Alcohol',
+      dropdownOpen: false,
+      alcoholData: this.props.ui.leftSideData.map((dataEntry, index) => {
+                     return { x: index, y: dataEntry.alcoholIntake }
+                   })
+    });
+  }
+
+  onClickSmoking () {
+    if(!this.props.ui.leftSideData || this.props.ui.leftSideData.length === 0) {
+      this.noDataAvailable();
+      return;
+    }
+
+    this.setState({
+      currentData: 'Smoking',
+      dropdownOpen: false,
+      smokingData: this.props.ui.leftSideData.map((dataEntry, index) => {
+                     return { x: index, y: dataEntry.smoke }
+                   })
+    });
+  }
+
+  onClickWeight () {
+    if(!this.props.ui.leftSideData || this.props.ui.leftSideData.length === 0) {
+      this.noDataAvailable();
+      return;
+    }
+
+    this.setState({
+      currentData: 'Weight',
+      dropdownOpen: false,
+      weightData: this.props.ui.leftSideData.map((dataEntry, index) => {
+                    return { x: index, y: dataEntry.weight }
+                  })
+    });
+  }
+
+  onClickDaily () {
+    this.setState({
+      currentData: 'Daily',
+      dropdownOpen: false
+    });
+  }
+
   renderDropdown () {
     return (
       <div className="Dropdown">
         <div onClick={this.changeDropdown}>
-          <h4>{this.state.currentData}</h4>
+          <h5>{this.state.currentData}</h5>
           <div className="DownArrow"/>
         </div>
         {this.renderOpenDropdown()}
@@ -42,24 +166,145 @@ class Detail extends Component {
 
     return (
       <div className="OpenDropdown">
-        <span>Overall</span>
-        <span>Blood Pressure</span>
-        <span>Heart Rate</span>
-        <span>Stress</span>
-        <span>Alcohol</span>
-        <span>Smoking</span>
-        <span>Weight</span>
-        <span>Daily</span>
+        <span onClick={this.onClickOverall}>Overall</span>
+        <span onClick={this.onClickBloodPressure}>Blood Pressure</span>
+        <span onClick={this.onClickHeartRate}>Heart Rate</span>
+        <span onClick={this.onClickStress}>Stress</span>
+        <span onClick={this.onClickAlcohol}>Alcohol</span>
+        <span onClick={this.onClickSmoking}>Smoking</span>
+        <span onClick={this.onClickWeight}>Weight</span>
+        <span onClick={this.onClickDaily}>Daily</span>
       </div>
     );
   }
 
   renderData () {
-    return (
-      <div className="Overall">
-        <DataTable />
-      </div>
-    );
+    switch(this.state.currentData) {
+      case 'Blood Pressure':
+        if(this.state.bloodPressureData == null) {
+          return (<div>No Data</div>)
+        } else {
+          return (
+            <AreaChart data={this.state.bloodPressureData}
+                       width={100}
+                       height={100}
+                       chartSeries={[
+                         {
+                           field: 'incineration',
+                           name: 'Incineration',
+                           color: 'blue',
+                           style: {
+                             opacity: .2
+                           }
+                         }]
+                       }
+                       x={this.x} />
+          );
+        }
+      
+      case 'Heart Rate':
+        if(this.state.heartRateData == null) {
+          return (<div>No Data</div>)
+        } else {
+          return (
+            <XYPlot
+              width={800}
+              height={400}>
+              <HorizontalGridLines />
+              <AreaSeries
+                color="#5BD1CF"
+                data={this.state.heartRateData}/>
+              <XAxis title="Date" />
+              <YAxis title="BPM" />
+            </XYPlot>
+          );
+        }
+      
+      case 'Stress':
+        if(this.state.stressData == null) {
+          return (<div>No Data</div>)
+        } else {
+          return (
+            <XYPlot
+              width={800}
+              height={400}>
+              <HorizontalGridLines />
+              <AreaSeries
+                color="#5BD1CF"
+                data={this.state.stressData}/>
+              <XAxis title="Date" />
+              <YAxis title="Stress Level" />
+            </XYPlot>
+          );
+        }
+      
+      case 'Alcohol':
+        if(this.state.alcoholData == null) {
+          return (<div>No Data</div>)
+        } else {
+          return (
+            <XYPlot
+              width={800}
+              height={400}>
+              <HorizontalGridLines />
+              <AreaSeries
+                color="#5BD1CF"
+                data={this.state.alcoholData}/>
+              <XAxis title="Date" />
+              <YAxis title="Alcohol" />
+            </XYPlot>
+          );
+        }
+      
+      case 'Smoking':
+        if(this.state.smokeingData == null) {
+          return (<div>No Data</div>)
+        } else {
+          return (
+            <XYPlot
+              width={800}
+              height={400}>
+              <HorizontalGridLines />
+              <AreaSeries
+                color="#5BD1CF"
+                data={this.state.smokeingData}/>
+              <XAxis title="Date" />
+              <YAxis title="Smoking" />
+            </XYPlot>
+          );
+        }
+      
+      case 'Weight':
+        if(this.state.weightData == null) {
+          return (<div>No Data</div>)
+        } else {
+          return (
+            <XYPlot
+              width={800}
+              height={400}>
+              <HorizontalGridLines />
+              <AreaSeries
+                color="#5BD1CF"
+                data={this.state.weightData}/>
+              <XAxis title="Date" />
+              <YAxis title="Weight (lbs)" />
+            </XYPlot>
+          );
+        }
+      
+      case 'Daily':
+        return (
+          <div>Daily</div>
+        );
+      
+      case 'Overall':
+      default:
+        return (
+          <div className="Overall">
+            <DataTable />
+          </div>
+        );
+    }
   }
 
   render () {

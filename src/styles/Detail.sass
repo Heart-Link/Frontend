@@ -14,15 +14,22 @@
       width: 30%
       border: 2px solid $GrayLight
       cursor: pointer
-      h4
-        padding-left: 1.5rem
+      h5
+        padding: .5rem 0 .5rem 1.5rem
       .DownArrow
         position: absolute
         right: 1.5rem
-        top: 1.25rem
+        top: 1.5rem
         &:before, &:after
           background-color: $PurpleDark
       .OpenDropdown
+        position: absolute
+        left: -2px
+        background-color: $White
+        z-index: 100
+        border: 2px solid $GrayLight
+        border-top: 0
+        width: calc(100% + 4px)
         span
           width: 100%
           display: block

@@ -23,7 +23,6 @@ class PatientPortal extends Component {
   }
 
   leftSide () {
-    //if (!this.props.ui.leftSideComponent) return <Detail />;
     if (!this.props.ui.leftSideComponent) return <PatientList {...this.props} />;
     
     const LeftSide = this.props.ui.leftSideComponent;

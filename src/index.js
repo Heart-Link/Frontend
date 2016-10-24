@@ -2,10 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
-import thunkMiddleware from 'redux-thunk'
+import thunkMiddleware from 'redux-thunk';
+import { Router, Route, browserHistory } from 'react-router';
 
 import { reducer } from './reducers';
 import PatientPortalContainer from './containers/PatientPortalContainer';
+
+import LoginContainer from './containers/LoginContainer';
 
 import InitialLoadService from './services/InitialLoadService';
 const initialLoadService = new InitialLoadService();
@@ -33,7 +36,10 @@ initialLoadService.getPatientList({ id: 'abc' }).then((response) => {
 
   ReactDOM.render(
     <Provider store={store}>
-      <PatientPortalContainer />
+      <Router history={browserHistory}>
+        <Route path='/' component={LoginContainer} />
+        <Route path='/patientportal' component={PatientPortalContainer} />
+      </Router>
     </Provider>,
 
     document.getElementById('root')

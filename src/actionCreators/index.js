@@ -10,6 +10,14 @@ const createAccount = (payload) => {
   }
 };
 
+const getPatientDetail = (payload) => {
+  return (dispatch) => {
+    userService.getPatientDetail(payload).then((response) => {
+      dispatch({ type: actionTypes.GET_PATIENT_DETAIL, payload: response })
+    });
+  };
+};
+
 const sendAlert = (payload) => {
   return { type: actionTypes.SEND_ALERT, payload };
 };
@@ -24,6 +32,7 @@ const setLeftSide = (payload) => {
 
 const actionCreators = {
   createAccount,
+  getPatientDetail,
   sendAlert,
   setRightSide,
   setLeftSide

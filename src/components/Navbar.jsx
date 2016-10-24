@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import CreateAccount from './CreateAccount';
+import Logo from './Logo';
 
 class Navbar extends Component {
   constructor () {
@@ -24,6 +25,7 @@ class Navbar extends Component {
     return (
       <div className="Navbar">
         <div className="Navbar-logo">
+          <Logo />
           <h3>Heart Link</h3>
         </div>
 

@@ -15,6 +15,11 @@ class UserService {
     const url = `http://${this.apiDomain}/api/patients/create`;
     return this.axios.post(url, payload.data);
   }
+
+  getPatientDetail (payload) {
+    const url = `http://${this.apiDomain}/api/patients/collect:id`;
+    return this.axios.get(url, { params: payload });
+  }
 }
 
 export default UserService;

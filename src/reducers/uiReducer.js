@@ -19,6 +19,11 @@ const uiReducer = (state = {}, action) => {
         alertMessage: action.payload.message
       });
 
+    case actionTypes.GET_PATIENT_DETAIL:
+      return Object.assign({}, state, {
+        leftSideData: action.payload.data
+      });
+
     default:
       return state;
   }

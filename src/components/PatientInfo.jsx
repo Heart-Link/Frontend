@@ -20,6 +20,7 @@ class PatientInfo extends Component {
       component: Detail,
       data: null
     });
+    this.props.actions.getPatientDetail({ id: this.props.ui.rightSideData.pid });
   }
 
   openInbox () {

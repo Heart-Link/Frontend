@@ -2,34 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import PatientTable from './PatientTable';
 
 class PatientList extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state ={
-      patientsList: [
-        {key: 1, firstname: 'John', lastname: 'Doe', status: 1, nurseFlag: false},
-        {key: 2, firstname: 'Bob', lastname: 'Marley', status: 3, nurseFlag: true},
-        {key: 3, firstname: 'Zack', lastname: 'Shackleton', status: 2, nurseFlag: true},
-        {key: 4, firstname: 'Max', lastname: 'Pickering', status: 1, nurseFlag: false},
-        {key: 5, firstname: 'Victoria', lastname: 'Rivas', status: 3, nurseFlag: true},
-        {key: 6, firstname: 'Mary', lastname: 'Sunshine', status: 1, nurseFlag: false},
-        {key: 7, firstname: 'Sagar', lastname: 'Mistry', status: 2, nurseFlag: true},
-        {key: 8, firstname: 'Kyle', lastname: 'Smith', status: 1, nurseFlag: false},
-        {key: 9, firstname: 'Victor', lastname: 'Sanchez', status: 3, nurseFlag: true}
-      ],
       sort: 'patientName',
       direction: 0,
       filterText:'',
-      filterList: [
-        {key: 1, firstname: 'John', lastname: 'Doe', status: 1, nurseFlag: false},
-        {key: 2, firstname: 'Bob', lastname: 'Marley', status: 3, nurseFlag: true},
-        {key: 3, firstname: 'Zack', lastname: 'Shackleton', status: 2, nurseFlag: true},
-        {key: 4, firstname: 'Max', lastname: 'Pickering', status: 1, nurseFlag: false},
-        {key: 5, firstname: 'Victoria', lastname: 'Rivas', status: 3, nurseFlag: true},
-        {key: 6, firstname: 'Mary', lastname: 'Sunshine', status: 1, nurseFlag: false},
-        {key: 7, firstname: 'Sagar', lastname: 'Mistry', status: 2, nurseFlag: true},
-        {key: 8, firstname: 'Kyle', lastname: 'Smith', status: 1, nurseFlag: false},
-        {key: 9, firstname: 'Victor', lastname: 'Sanchez', status: 3, nurseFlag: true}
-      ]
+      filterList: this.props.patientList
     };
 
     this.patientNameClickHandler = this.patientNameClickHandler.bind(this);
@@ -48,7 +27,7 @@ class PatientList extends Component {
       });
     }
     this.setState({
-      filterList: this.state.patientsList.filter((patient)=>{
+      filterList: this.props.patientList.filter((patient)=>{
         return(
           (patient.firstname + patient.lastname).toLowerCase().match(event.target.value.trim().toLowerCase())
         );
@@ -112,21 +91,16 @@ class PatientList extends Component {
 
   fullViewOrNurseView(){
     if(!this.props.fullView){
-      let nurseRecommend = [];
-      this.state.filterList.map((patient) =>{
-        if(patient.nurseFlag){
-          nurseRecommend.push(patient);
-        }
-      });
+      let nurseRecommend = this.props.patientList.filter((patient)=>patient.nurseFlag);
       return <PatientTable sortByName={this.patientNameClickHandler}
         sortByStatus={this.statusClickHandler}
-        listOfPatients={nurseRecommend}
-        patientSummaryClick={this.props.patientSummaryClick}/>
+        patientList={nurseRecommend}
+        openPatientSummary={this.props.openPatientSummary}/>
     }
     return <PatientTable sortByName={this.patientNameClickHandler}
       sortByStatus={this.statusClickHandler}
-      listOfPatients={this.state.filterList}
-      patientSummaryClick={this.props.patientSummaryClick}/>
+      patientList={this.state.filterList}
+      openPatientSummary={this.props.openPatientSummary}/>
   }
 
   render () {
@@ -140,8 +114,10 @@ class PatientList extends Component {
     );
   }
 };
+
 PatientList.propTypes={
-  patientSummaryClick: PropTypes.func
+  openPatientSummary: PropTypes.func,
+  patientList: PropTypes.arrayOf(PropTypes.object)
 }
 
 export default PatientList;

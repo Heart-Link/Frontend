@@ -4,17 +4,18 @@ import PatientRow from './PatientRow';
 class PatientTable extends Component{
 
   getPatients(){
-    if(this.props.listOfPatients.length === 0){
+    if(this.props.patientList === 0){
       return <h4>No Patients Found</h4>
     }
     else{
       return(
-        this.props.listOfPatients.map((patient) =>{
-          return <PatientRow key={patient.key}
+        this.props.patientList.map((patient) =>{
+          return <PatientRow key={patient.id}
+                    id={patient.id}
                     firstname={patient.firstname}
                     lastname={patient.lastname}
                     status={patient.status}
-                    patientSummaryClick={this.props.patientSummaryClick}/>;
+                    openPatientSummary={this.props.openPatientSummary}/>;
         })
       );
     }
@@ -34,8 +35,8 @@ class PatientTable extends Component{
 }
 
 PatientTable.propTypes ={
-  listOfPatients: PropTypes.arrayOf(PropTypes.object),
-  patientSummaryClick: PropTypes.func
+  patientList: PropTypes.arrayOf(PropTypes.object),
+  openPatientSummary: PropTypes.func
 };
 
 export default PatientTable;

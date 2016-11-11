@@ -1,21 +1,33 @@
 import React, { Component } from 'react';
 import BasicInfo from './BasicInfo';
 import Mail from './Mail';
+import Detail from './Detail';
 
 class PatientSummary extends Component{
   constructor(){
     super();
     this.state = {
-      showMessages: false
+      showMessages: false,
+      detailView: false
     }
-    //this.renderSummaryView = this.renderSummaryView.bind(this);
+    this.detailViewClick = this.detailViewClick.bind(this);
+    this.renderBottomHalf = this.renderBottomHalf.bind(this);
+  }
+  detailViewClick(event){
+    this.setState({detailView: !this.state.detailView});
+  }
+  renderBottomHalf(){
+    if(this.state.detailView){
+      return <Detail handlePatientDetailClick={this.detailViewClick}/>;
+    }
+    return <BasicInfo handlePatientDetailClick={this.detailViewClick} />;
   }
   render(){
     return(
       <div className='PatientSummary'>
         <div className='TopBar'>
           <div className='BackAndMail'>
-            <span className='BackButton' onClick={this.props.closePatientSummary}>Back</span>
+            <span className='BackButton' onClick={this.props.closePatientSummary}>{'< Patient List'}</span>
             <Mail />
           </div>
           <div className='NameAndID'>
@@ -24,7 +36,7 @@ class PatientSummary extends Component{
               <span className='PatientID'>{this.props.chosenPatient.id}</span>
           </div>
         </div>
-        <BasicInfo />
+        {this.renderBottomHalf()}
       </div>
     );
   }

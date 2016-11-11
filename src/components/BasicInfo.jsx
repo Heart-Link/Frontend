@@ -39,7 +39,7 @@ class BasicInfo extends Component{
           </div>
           <p className='Checklist'>Checklist:</p>
           <div className='PatientDetailButton'>
-            <button>View Patient Detail</button>
+            <button onClick={this.props.handlePatientDetailClick}>View Patient Detail</button>
           </div>
         </div>
       </div>

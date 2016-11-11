@@ -24,10 +24,6 @@ class PatientTable extends Component{
   render(){
     return(
       <div className="PatientTable">
-        <div className="SortingRow">
-          <p className="NameSort" onClick={this.props.sortByName}>Patient Name</p>
-          <p className="StatusSort" onClick={this.props.sortByStatus}>Status</p>
-        </div>
         {this.getPatients()}
       </div>
     );

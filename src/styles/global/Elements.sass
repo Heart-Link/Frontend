@@ -141,3 +141,95 @@ button
     top: 11px
     transform: rotate(45deg)
     width: 15px
+
+.DownArrow
+  cursor: pointer
+  height: 25px
+  position: relative
+  width: 25px
+  &:before
+    background-color: $GrayLight
+    content: ''
+    height: 3px
+    left: 6px
+    position: absolute
+    top: 11px
+    transform: rotate(-45deg) translateX(49%)
+    width: 15px
+  &:after
+    background-color: $GrayLight
+    content: ''
+    height: 3px
+    left: 6px
+    position: absolute
+    top: 11px
+    transform: rotate(45deg) translateX(-49%)
+    width: 15px
+
+.DownArrow_active
+  cursor: pointer
+  height: 25px
+  position: relative
+  width: 25px
+  &:before
+    background-color: $GreenLight
+    content: ''
+    height: 3px
+    left: 6px
+    position: absolute
+    top: 11px
+    transform: rotate(-45deg) translateX(49%)
+    width: 15px
+  &:after
+    background-color: $GreenLight
+    content: ''
+    height: 3px
+    left: 6px
+    position: absolute
+    top: 11px
+    transform: rotate(45deg) translateX(-49%)
+    width: 15px
+
+.UpArrow
+  cursor: pointer
+  height: 25px
+  position: relative
+  width: 25px
+  &:before
+    background-color: $GrayLight
+    content: ''
+    height: 3px
+    left: 6px
+    position: absolute
+    transform: rotate(45deg) translateX(49%)
+    width: 15px
+  &:after
+    background-color: $GrayLight
+    content: ''
+    height: 3px
+    left: 6px
+    position: absolute
+    transform: rotate(-45deg) translateX(-49%)
+    width: 15px
+
+.UpArrow_active
+  cursor: pointer
+  height: 25px
+  position: relative
+  width: 25px
+  &:before
+    background-color: $GreenLight
+    content: ''
+    height: 3px
+    left: 6px
+    position: absolute
+    transform: rotate(45deg) translateX(49%)
+    width: 15px
+  &:after
+    background-color: $GreenLight
+    content: ''
+    height: 3px
+    left: 6px
+    position: absolute
+    transform: rotate(-45deg) translateX(-49%)
+    width: 15px

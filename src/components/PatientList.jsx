@@ -29,13 +29,13 @@ class PatientList extends Component {
     this.setState({
       filterList: this.props.patientList.filter((patient)=>{
         return(
-          (patient.firstname + patient.lastname).toLowerCase().match(event.target.value.trim().toLowerCase())
+          (patient.firstname + patient.lastname + patient.id).toLowerCase().match(event.target.value.trim().toLowerCase())
         );
       })
     });
   }
+
   patientNameClickHandler(event){
-    event.preventDefault();
     this.setState({sort:'patientName'});
 
     if(this.state.direction === 0){
@@ -67,8 +67,17 @@ class PatientList extends Component {
       return;
     }
 
+  patientNameClassName(){
+    if(this.state.sort === 'patientName'){
+      if(this.state.direction === 0){
+        return 'DownArrow_active';
+      }
+      return 'UpArrow_active';
+    }
+    return 'DownArrow';
+  }
+
   statusClickHandler(event){
-    event.preventDefault();
     this.setState({sort: 'status'});
 
     if(this.state.direction === 0){
@@ -89,17 +98,23 @@ class PatientList extends Component {
       }
   }
 
+  statusClassName(){
+    if(this.state.sort === 'status'){
+      if(this.state.direction === 0){
+        return 'DownArrow_active';
+      }
+      return 'UpArrow_active';
+    }
+    return 'DownArrow';
+  }
+
   fullViewOrNurseView(){
     if(!this.props.fullView){
       let nurseRecommend = this.props.patientList.filter((patient)=>patient.nurseFlag);
-      return <PatientTable sortByName={this.patientNameClickHandler}
-        sortByStatus={this.statusClickHandler}
-        patientList={nurseRecommend}
+      return <PatientTable patientList={nurseRecommend}
         openPatientSummary={this.props.openPatientSummary}/>
     }
-    return <PatientTable sortByName={this.patientNameClickHandler}
-      sortByStatus={this.statusClickHandler}
-      patientList={this.state.filterList}
+    return <PatientTable patientList={this.state.filterList}
       openPatientSummary={this.props.openPatientSummary}/>
   }
 
@@ -108,6 +123,16 @@ class PatientList extends Component {
       <div className="PatientList">
         <div className="TopRow">
           <input type="text" className="SearchBox" placeholder="Search for a patient..." onChange={this.handleUserInput}/>
+        </div>
+        <div className='Headers'>
+          <div>
+            <p>Patient Name</p>
+            <div className={this.patientNameClassName()} onClick={this.patientNameClickHandler}/>
+          </div>
+          <div>
+            <p>Status</p>
+            <div className={this.statusClassName()} onClick={this.statusClickHandler}/>
+          </div>
         </div>
         {this.fullViewOrNurseView()}
       </div>

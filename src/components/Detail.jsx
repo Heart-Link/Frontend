@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import Calendar from './Calendar';
 import DataTable from './DataTable';
+import DayDetail from './DayDetail';
 
 class Detail extends Component{
   constructor(){
     super();
     this.state={
       dropdownOpen: false,
-      currentData: 'Daily'
+      currentData: 'Daily',
+      chosenDate: null,
+      dayDetail: false
     };
     this.handleDropdown = this.handleDropdown.bind(this);
     this.renderDropdown = this.renderDropdown.bind(this);
@@ -20,6 +23,22 @@ class Detail extends Component{
     this.onClickSmoke = this.onClickSmoke.bind(this);
     this.onClickWeight = this.onClickWeight.bind(this);
     this.renderView = this.renderView.bind(this);
+    this.dateClick = this.dateClick.bind(this);
+    this.resetCalendarView = this.resetCalendarView.bind(this);
+  }
+
+  dateClick(date){
+   this.setState({
+      chosenDate: date,
+      dayDetail: true
+    });
+  }
+
+  resetCalendarView(){
+    this.setState({
+      dayDetail: false,
+      chosenDay: null
+    });
   }
 
   handleDropdown(){
@@ -55,43 +74,50 @@ class Detail extends Component{
   onClickDaily(){
     this.setState({
       currentData: 'Daily',
-      dropdownOpen: false
+      dropdownOpen: false,
+      dayDetail: false
     });
   }
   onClickBP(){
     this.setState({
       currentData: 'Blood Pressure',
-      dropdownOpen: false
+      dropdownOpen: false,
+      dayDetail: false
     });
   }
   onClickHR(){
     this.setState({
       currentData: 'Heart Rate',
-      dropdownOpen: false
+      dropdownOpen: false,
+      dayDetail: false
     });
   }
   onClickStress(){
     this.setState({
       currentData: 'Stress',
-      dropdownOpen: false
+      dropdownOpen: false,
+      dayDetail: false
     });
   }
   onClickAlcohol(){
     this.setState({
       currentData: 'Alcohol',
-      dropdownOpen: false
+      dropdownOpen: false,
+      dayDetail: false
     });
   }
   onClickSmoke(){
     this.setState({
       currentData: 'Smoking',
-      dropdownOpen: false
+      dropdownOpen: false,
+      dayDetail: false
     });
   }
   onClickWeight(){
     this.setState({
       currentData: 'Weight',
-      dropdownOpen: false
+      dropdownOpen: false,
+      dayDetail: false
     });
   }
   renderView(){
@@ -115,13 +141,18 @@ class Detail extends Component{
         return(<DataTable />);
 
       default:
-        return(<Calendar />);
+        if(this.state.dayDetail){
+          return(<DayDetail back={this.resetCalendarView} date={this.state.chosenDate}/>);
+        }
+        else{
+          return(<Calendar func={this.dateClick}/>);
+        }
     }
   }
   render(){
     return(
       <div className='Detail'>
-        <p onClick={this.props.handlePatientDetailClick}>{'< Latest Input'}</p>
+        {/*<p onClick={this.props.handlePatientDetailClick}>{'< Latest Input'}</p>*/}
         {this.renderDropdown()}
         {this.renderView()}
       </div>

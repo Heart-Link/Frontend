@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 
 class Calendar extends Component{
@@ -13,12 +12,11 @@ class Calendar extends Component{
   }
 
   handleDateChange(date){
-    this.setState({
-      startDate: date
-    });
+    this.props.func(date);
   }
   render(){
     return <DatePicker inline
+              todayButton={"Today"}
               selected={this.state.startDate}
               onChange={this.handleDateChange} />;
   }

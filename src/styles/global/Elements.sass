@@ -233,3 +233,52 @@ button
     position: absolute
     transform: rotate(-45deg) translateX(-49%)
     width: 15px
+
+.react-datepicker
+  font-family: 'Open Sans', sans-serif
+  background-color: $White
+  width: 100%
+  margin-top: 1rem
+  border: none
+  display: inline-block
+  position: relative
+
+.react-datepicker__header
+  text-align: center
+  padding-top: 8px
+  position: relative
+
+.react-datepicker__current-month
+  margin-top: 0
+  font-size: 25px
+  font-weight: 300
+
+.react-datepicker__day-name,
+.react-datepicker__day
+  display: inline-block
+  width: 13%
+  font-size: 15px
+  font-weight: 300
+  text-align: center
+  line-height: 2.3
+
+.react-datepicker__day
+  cursor: pointer
+  &--today
+    font-weight: bold
+  &--outside-month
+    color: $GrayLight
+  &--highlighted
+    color: $Black
+  &--selected
+    background-color: transparent
+    color: $Black
+    &:hover
+      background-color: $PurpleLight
+
+.react-datepicker__today-button
+  border-top: 1px solid $GrayLight
+  text-align: center
+  font-size: 20px
+  font-weight: 300
+  padding: 3px 0

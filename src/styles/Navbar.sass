@@ -22,18 +22,50 @@
 
 .Navbar-navigation
   position: absolute
-  right: 5rem
+  right: 1.5rem
   top: 50%
-  transform: translateY(-50%)
+  transform: translateY(-40%)
 
-.Hamburger
-  position: absolute
-  transform: translateY(-45%)
-  width: 3.5rem
-  display: inline-block
-  border-radius: 0.25rem
+.HamburgerInactive
+  cursor: pointer
+  height: 25px
+  position: relative
+  width: 25px
+  &:before
+    content: ''
+    height: 2.25rem
+    position: absolute
+    border-top: 1.25rem double $White
+    width: 3.25rem
+    border-radius: 5%
+    right: 1px
+  &:after
+    content: ''
+    height: 2rem
+    position: absolute
+    border-bottom: .45rem solid $White
+    width: 3.25rem
+    border-radius: 5%
+    right: 1px
 
-.Line1, .Line2, .Line3
-  border-bottom: 0.4rem solid $White
-  margin-bottom: 0.6rem
-  border-radius: 0.25rem
+.HamburgerActive
+  cursor: pointer
+  height: 25px
+  position: relative
+  width: 25px
+  &:before
+    background-color: $White
+    content: ''
+    height: 3px
+    right: 25%
+    position: absolute
+    transform: rotate(45deg) translateX(49%)
+    width: 30px
+  &:after
+    background-color: $White
+    content: ''
+    height: 3px
+    left: 35%
+    position: absolute
+    transform: rotate(-45deg) translateX(-49%)
+    width: 30px

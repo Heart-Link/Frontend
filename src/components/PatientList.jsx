@@ -125,13 +125,13 @@ class PatientList extends Component {
           <input type="text" className="SearchBox" placeholder="Search for a patient..." onChange={this.handleUserInput}/>
         </div>
         <div className='Headers'>
-          <div>
+          <div className='PatientSort' onClick={this.patientNameClickHandler}>
             <p>Patient Name</p>
-            <div className={this.patientNameClassName()} onClick={this.patientNameClickHandler}/>
+            <div className={this.patientNameClassName()}/>
           </div>
-          <div>
+          <div className='StatusSort' onClick={this.statusClickHandler}>
             <p>Status</p>
-            <div className={this.statusClassName()} onClick={this.statusClickHandler}/>
+            <div className={this.statusClassName()}/>
           </div>
         </div>
         {this.fullViewOrNurseView()}

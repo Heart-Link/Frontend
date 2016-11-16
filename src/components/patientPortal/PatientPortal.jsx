@@ -91,7 +91,9 @@ renderPortalView(){
     console.log(this.props, "PatientPortal");
     return (
       <div className="PatientPortal">
-        <Navbar actions={this.props.actions} handleNavBarClick = {this.navBarClickHandler}/>
+        <Navbar actions={this.props.actions}
+          handleNavBarClick = {this.navBarClickHandler}
+          showMenu={this.state.showMenu}/>
         {this.renderPortalView()}
       </div>
     );

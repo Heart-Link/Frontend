@@ -6,7 +6,7 @@ class DayDetail extends Component{
     return(
       <div className='DayDetail'>
         <div>
-          <p onClick={this.props.back}>{'< Back'}</p>
+          <p className='BackBtn' onClick={this.props.back}>{'< Back'}</p>
           <p className='Date'>{this.props.date.format("MM[/]DD[/]YYYY")}</p>
         </div>
         <div>

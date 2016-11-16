@@ -1,10 +1,18 @@
 import React, { Component, PropTypes } from 'react';
-import CreateAccount from './CreateAccount';
 import Logo from './Logo';
 
 class Navbar extends Component {
   constructor () {
     super();
+
+    this.hamburgerMenuClassName = this.hamburgerMenuClassName.bind(this);
+  }
+
+  hamburgerMenuClassName(){
+    if(this.props.showMenu){
+      return 'HamburgerActive';
+    }
+    return 'HamburgerInactive';
   }
 
   render () {
@@ -15,10 +23,10 @@ class Navbar extends Component {
           <h6>Heart Link</h6>
         </div>
         <div className="Navbar-navigation">
-          <div className="Hamburger" onClick={this.props.handleNavBarClick}>
-            <div className="Line1"></div>
+          <div className={this.hamburgerMenuClassName()} onClick={this.props.handleNavBarClick}>
+           {/*<div className="Line1"></div>
             <div className="Line2"></div>
-            <div className="Line3"></div>
+            <div className="Line3"></div>*/}
           </div>
         </div>
       </div>

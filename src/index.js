@@ -7,16 +7,22 @@ import { Router, Route, browserHistory } from 'react-router';
 
 import { reducer } from './reducers';
 import PatientPortalContainer from './containers/PatientPortalContainer';
-
 import LoginContainer from './containers/LoginContainer';
 
-import InitialLoadService from './services/InitialLoadService';
-const initialLoadService = new InitialLoadService();
+import UserService from './services/UserService';
+const userService = new UserService();
 
 import './styles/index.sass';
 
 const initialState = {
-  patientListReducer: {},
+  patientListReducer: [],
+  userInfoReducer: {
+    isAuthorized: false,
+    isDoctor: null,
+    jwt: null,
+    providerID: null,
+    userName: null
+  },
   uiReducer: {
     alertMessage: null,
     leftSideComponent: null,
@@ -26,27 +32,25 @@ const initialState = {
   }
 };
 
-initialLoadService.getPatientList({ id: 'abc' }).then((response) => {
-  initialState.patientListReducer = response.data;
-  const store = createStore(
-    reducer, 
-    initialState, 
-    compose( applyMiddleware(thunkMiddleware), window.devToolsExtension && window.devToolsExtension() )
-  );
+var store = createStore(
+  reducer, 
+  initialState, 
+  compose( applyMiddleware(thunkMiddleware), window.devToolsExtension && window.devToolsExtension() )
+);
 
-  ReactDOM.render(
-    <Provider store={store}>
-      <Router history={browserHistory}>
-        <Route path='/' component={LoginContainer} />
-        <Route path='/patientportal' component={PatientPortalContainer} />
-      </Router>
-    </Provider>,
+const requireAuth = () => {
+  if (!store.getState().userInfoReducer.isAuthorized) return false;
 
-    document.getElementById('root')
-  );
+  return true;
+}
 
-}).catch ((error) => {
-  console.log(error);
-});
+ReactDOM.render(
+  <Provider store={store}>
+    <Router history={browserHistory}>
+      <Route path='/' component={LoginContainer} />
+      <Route path='/patientPortal' component={PatientPortalContainer} onEnter={requireAuth}/>
+    </Router>
+  </Provider>,
 
-
+  document.getElementById('root')
+);

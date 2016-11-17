@@ -20,7 +20,10 @@ class PatientInfo extends Component {
       component: Detail,
       data: null
     });
-    this.props.actions.getPatientDetail({ id: this.props.ui.rightSideData.pid });
+    this.props.actions.getPatientDetail({ 
+      id: this.props.ui.rightSideData.pid,
+      token: this.props.userInfo.jwt
+    });
   }
 
   openInbox () {
@@ -66,9 +69,10 @@ class PatientInfo extends Component {
   renderLastInputDate () {
     if (!this.props.ui.rightSideData.lastInput.entryInfo) return '--';
 
-    const lastInputYear = this.props.ui.rightSideData.lastInput.entryInfo.substring(2, 4);
-    const lastInputMonth = this.props.ui.rightSideData.lastInput.entryInfo.substring(5, 7);
-    const lastInputDay = this.props.ui.rightSideData.lastInput.entryInfo.substring(8, 10);
+    const date = new Date(this.props.ui.rightSideData.lastInput.entryInfo)
+    const lastInputYear = date.getFullYear();
+    const lastInputMonth = date.getMonth();
+    const lastInputDay = date.getDate();
 
     return lastInputMonth + "/" + lastInputDay + "/" + lastInputYear;
   }

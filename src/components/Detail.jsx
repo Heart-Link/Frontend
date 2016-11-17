@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import DataTable from './DataTable';
-import {XYPlot, XAxis, YAxis, HorizontalGridLines, AreaSeries} from 'react-vis';
+import {XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalGridLines, AreaSeries} from 'react-vis';
 
 class Detail extends Component {
   constructor (props) {
@@ -20,7 +20,8 @@ class Detail extends Component {
     this.state = {
       currentData: 'Overall',
       dropdownOpen: false,
-      bloodPressureData: null,
+      bpHighData: null,
+      bpLowData: null,
       heartRateData: null,
       stressData: null,
       alcoholData: null,
@@ -61,9 +62,12 @@ class Detail extends Component {
     this.setState({
       currentData: 'Blood Pressure',
       dropdownOpen: false,
-      heartRateData: this.props.ui.leftSideData.map((dataEntry, index) => {
-                        return { x: index, y: dataEntry.bpHigh}
-                     })
+      bpHighData: this.props.ui.leftSideData.map((dataEntry, index) => {
+                    return { x: index, y: dataEntry.bpHigh }
+                  }),
+      bpLowData: this.props.ui.leftSideData.map((dataEntry, index) => {
+                   return { x: index, y: dataEntry.bpLow }
+                 })
     });
   }
 
@@ -181,29 +185,7 @@ class Detail extends Component {
   renderData () {
     switch(this.state.currentData) {
       case 'Blood Pressure':
-        if(this.state.bloodPressureData == null) {
-          return (<div>No Data</div>)
-        } else {
-          return (
-            <AreaChart data={this.state.bloodPressureData}
-                       width={100}
-                       height={100}
-                       chartSeries={[
-                         {
-                           field: 'incineration',
-                           name: 'Incineration',
-                           color: 'blue',
-                           style: {
-                             opacity: .2
-                           }
-                         }]
-                       }
-                       x={this.x} />
-          );
-        }
-      
-      case 'Heart Rate':
-        if(this.state.heartRateData == null) {
+       if(this.state.bpHighData === null) {
           return (<div>No Data</div>)
         } else {
           return (
@@ -211,6 +193,29 @@ class Detail extends Component {
               width={800}
               height={400}>
               <HorizontalGridLines />
+              <VerticalGridLines />
+              <AreaSeries
+                color="#5BD1CF"
+                data={this.state.bpHighData}/>
+              <AreaSeries
+                color="#34A6B3"
+                data={this.state.bpLowData}/>
+              <XAxis title="Date" />
+              <YAxis title="BPM" />
+            </XYPlot>
+          );
+        }
+      
+      case 'Heart Rate':
+        if(this.state.heartRateData === null) {
+          return (<div>No Data</div>)
+        } else {
+          return (
+            <XYPlot
+              width={800}
+              height={400}>
+              <HorizontalGridLines />
+              <VerticalGridLines />
               <AreaSeries
                 color="#5BD1CF"
                 data={this.state.heartRateData}/>
@@ -221,7 +226,7 @@ class Detail extends Component {
         }
       
       case 'Stress':
-        if(this.state.stressData == null) {
+        if(this.state.stressData === null) {
           return (<div>No Data</div>)
         } else {
           return (
@@ -229,6 +234,7 @@ class Detail extends Component {
               width={800}
               height={400}>
               <HorizontalGridLines />
+              <VerticalGridLines />
               <AreaSeries
                 color="#5BD1CF"
                 data={this.state.stressData}/>
@@ -239,7 +245,7 @@ class Detail extends Component {
         }
       
       case 'Alcohol':
-        if(this.state.alcoholData == null) {
+        if(this.state.alcoholData === null) {
           return (<div>No Data</div>)
         } else {
           return (
@@ -247,6 +253,7 @@ class Detail extends Component {
               width={800}
               height={400}>
               <HorizontalGridLines />
+              <VerticalGridLines />
               <AreaSeries
                 color="#5BD1CF"
                 data={this.state.alcoholData}/>
@@ -257,7 +264,7 @@ class Detail extends Component {
         }
       
       case 'Smoking':
-        if(this.state.smokeingData == null) {
+        if(this.state.smokeingData === null) {
           return (<div>No Data</div>)
         } else {
           return (
@@ -265,6 +272,7 @@ class Detail extends Component {
               width={800}
               height={400}>
               <HorizontalGridLines />
+              <VerticalGridLines />
               <AreaSeries
                 color="#5BD1CF"
                 data={this.state.smokeingData}/>
@@ -275,7 +283,7 @@ class Detail extends Component {
         }
       
       case 'Weight':
-        if(this.state.weightData == null) {
+        if(this.state.weightData === null) {
           return (<div>No Data</div>)
         } else {
           return (
@@ -283,6 +291,7 @@ class Detail extends Component {
               width={800}
               height={400}>
               <HorizontalGridLines />
+              <VerticalGridLines />
               <AreaSeries
                 color="#5BD1CF"
                 data={this.state.weightData}/>
@@ -301,7 +310,7 @@ class Detail extends Component {
       default:
         return (
           <div className="Overall">
-            <DataTable />
+            <DataTable data={this.props.ui.leftSideData}/>
           </div>
         );
     }

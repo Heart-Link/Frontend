@@ -33,6 +33,7 @@ class PatientList extends Component {
   }
 
   goodCount () {
+    if (!this.state.filteredList) return 0;
     let count = 0;
 
     this.state.filteredList.map((patient) => {
@@ -43,6 +44,7 @@ class PatientList extends Component {
   }
 
   mediumCount () {
+    if (!this.state.filteredList) return 0;
     let count = 0;
 
     this.state.filteredList.map((patient) => {
@@ -53,6 +55,7 @@ class PatientList extends Component {
   }
 
   warningCount () {
+    if (!this.state.filteredList) return 0;
     let count = 0;
 
     this.state.filteredList.map((patient) => {

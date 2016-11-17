@@ -17,8 +17,13 @@ class DataTable extends Component {
     this.state = {
       direction: 0,
       sort: 'date',
-      dataList: []
+      dataList: this.props.data
     };
+  }
+
+  componentWillUpdate (nextProps) {
+    if(this.props.data === nextProps.data) return;
+    this.setState({ dataList: nextProps.data });
   }
 
   dateClickHandler () {
@@ -69,7 +74,7 @@ class DataTable extends Component {
         this.setState({ 
           direction: 1,
           dataList: this.state.dataList.sort((a, b) => { 
-            return b.pid - a.pid 
+            return b.bpHigh - a.bpHigh 
           })
         });
 
@@ -77,7 +82,7 @@ class DataTable extends Component {
         this.setState({ 
           direction: 0,
           dataList: this.state.dataList.sort((a, b) => { 
-            return a.pid - b.pid 
+            return a.bpHigh - b.bpHigh 
           })
         });
       }
@@ -89,7 +94,7 @@ class DataTable extends Component {
       sort: 'bp',
       direction: 0,
       dataList: this.state.dataList.sort((a, b) => { 
-                     return a.pid - b.pid 
+                     return a.bpHigh - b.bpHigh 
                    })
     });
   }
@@ -111,7 +116,7 @@ class DataTable extends Component {
         this.setState({ 
           direction: 1,
           dataList: this.state.dataList.sort((a, b) => { 
-            return b.pid - a.pid 
+            return b.averageHR - a.averageHR 
           })
         });
 
@@ -119,7 +124,7 @@ class DataTable extends Component {
         this.setState({ 
           direction: 0,
           dataList: this.state.dataList.sort((a, b) => { 
-            return a.pid - b.pid 
+            return a.averageHR - b.averageHR 
           })
         });
       }
@@ -131,7 +136,7 @@ class DataTable extends Component {
       sort: 'hr',
       direction: 0,
       dataList: this.state.dataList.sort((a, b) => { 
-                     return a.pid - b.pid 
+                     return a.averageHR - b.averageHR 
                    })
     });
   }
@@ -153,7 +158,7 @@ class DataTable extends Component {
         this.setState({ 
           direction: 1,
           dataList: this.state.dataList.sort((a, b) => { 
-            return b.pid - a.pid 
+            return b.stressLevel - a.stressLevel
           })
         });
 
@@ -161,7 +166,7 @@ class DataTable extends Component {
         this.setState({ 
           direction: 0,
           dataList: this.state.dataList.sort((a, b) => { 
-            return a.pid - b.pid 
+            return a.stressLevel - b.stressLevel 
           })
         });
       }
@@ -173,7 +178,7 @@ class DataTable extends Component {
       sort: 'stress',
       direction: 0,
       dataList: this.state.dataList.sort((a, b) => { 
-                     return a.pid - b.pid 
+                     return a.stressLevel - b.stressLevel 
                    })
     });
   }
@@ -195,7 +200,7 @@ class DataTable extends Component {
         this.setState({ 
           direction: 1,
           dataList: this.state.dataList.sort((a, b) => { 
-            return b.pid - a.pid 
+            return b.alcoholIntake - a.alcoholIntake 
           })
         });
 
@@ -203,7 +208,7 @@ class DataTable extends Component {
         this.setState({ 
           direction: 0,
           dataList: this.state.dataList.sort((a, b) => { 
-            return a.pid - b.pid 
+            return a.alcoholIntake - b.alcoholIntake 
           })
         });
       }
@@ -215,7 +220,7 @@ class DataTable extends Component {
       sort: 'alcohol',
       direction: 0,
       dataList: this.state.dataList.sort((a, b) => { 
-                     return a.pid - b.pid 
+                     return a.alcoholIntake - b.alcoholIntake 
                    })
     });
   }
@@ -237,7 +242,7 @@ class DataTable extends Component {
         this.setState({ 
           direction: 1,
           dataList: this.state.dataList.sort((a, b) => { 
-            return b.pid - a.pid 
+            return b.smoke - a.smoke 
           })
         });
 
@@ -245,7 +250,7 @@ class DataTable extends Component {
         this.setState({ 
           direction: 0,
           dataList: this.state.dataList.sort((a, b) => { 
-            return a.pid - b.pid 
+            return a.smoke - b.smoke 
           })
         });
       }
@@ -257,7 +262,7 @@ class DataTable extends Component {
       sort: 'smoke',
       direction: 0,
       dataList: this.state.dataList.sort((a, b) => { 
-                     return a.pid - b.pid 
+                     return a.smoke - b.smoke 
                    })
     });
   }
@@ -279,7 +284,7 @@ class DataTable extends Component {
         this.setState({ 
           direction: 1,
           dataList: this.state.dataList.sort((a, b) => { 
-            return b.pid - a.pid 
+            return b.weight - a.weight 
           })
         });
 
@@ -287,7 +292,7 @@ class DataTable extends Component {
         this.setState({ 
           direction: 0,
           dataList: this.state.dataList.sort((a, b) => { 
-            return a.pid - b.pid 
+            return a.weight - b.weight 
           })
         });
       }
@@ -299,7 +304,7 @@ class DataTable extends Component {
       sort: 'weight',
       direction: 0,
       dataList: this.state.dataList.sort((a, b) => { 
-                     return a.pid - b.pid 
+                     return a.weight - b.weight 
                    })
     });
   }
@@ -313,6 +318,15 @@ class DataTable extends Component {
     }
 
     return 'DownArrow';
+  }
+
+  renderRows () {
+    if(this.state.dataList === null || this.state.dataList.length === 0) return <h3>No Data</h3>;
+
+    return this.state.dataList.map((dailyEntry, index) => {
+      return <DataRow dailyEntry={dailyEntry}
+                      key={index} />
+    });
   }
   
   render () {
@@ -349,6 +363,7 @@ class DataTable extends Component {
           </div>
         </div>
 
+        {this.renderRows()}
       </div>
     );
   }

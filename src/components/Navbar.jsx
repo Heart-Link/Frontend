@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 import CreateAccount from './CreateAccount';
 import Logo from './Logo';
 
@@ -32,7 +33,7 @@ class Navbar extends Component {
         <div className="Navbar-navigation">
           <ul>
             <li><a onClick={this.createAccountHandler}>Create Account</a></li>
-            <li><a>Log Out</a></li>
+            <li><Link to={'/'}>Log Out</Link></li>
           </ul>
         </div>
       </div>

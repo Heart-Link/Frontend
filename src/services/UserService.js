@@ -3,21 +3,26 @@ import axios from 'axios';
 class UserService {
 	constructor () {
 		this.axios = axios;
-		this.apiDomain = `ec2-54-163-104-129.compute-1.amazonaws.com:8080`;
+		this.apiDomain = `localhost:3000`;
 	}
 
-	getPatientList (payload) {
-		const url = `http://${this.apiDomain}/api/patientList:id?id=abc`;
-		return this.axios(url, payload.data);
-	}
+  login (payload) {
+    const url = `http://${this.apiDomain}/login`;
+    return axios.post(url, payload.data );
+  }
+
+  getPatientList (payload) {
+    const url = `http://${this.apiDomain}/api/patientList:id:doc:token`;
+    return axios.get(url, { params: payload });
+  }
 
   createPatient (payload) {
-    const url = `http://${this.apiDomain}/api/patients/create`;
+    const url = `http://${this.apiDomain}/api/patients/create:token`;
     return this.axios.post(url, payload.data);
   }
 
   getPatientDetail (payload) {
-    const url = `http://${this.apiDomain}/api/patients/collect:id`;
+    const url = `http://${this.apiDomain}/api/patients/collect:id:token`;
     return this.axios.get(url, { params: payload });
   }
 }

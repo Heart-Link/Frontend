@@ -1,7 +1,10 @@
 import * as actionTypes from '../actionTypes';
 
-const patientListReducer = (state = {}, action) => {
+const patientListReducer = (state = [], action) => {
   switch (action.type) {
+    case actionTypes.GET_PATIENT_LIST:
+      return action.payload.data;
+
     case actionTypes.CREATE_ACCOUNT:
       const createPatientPayload = {
         firstName: action.payload.data.firstname,

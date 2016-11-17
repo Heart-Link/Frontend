@@ -68,5 +68,6 @@
   },
   "eslintConfig": {
     "extends": "./config/eslint.js"
-  }
+  },
+  "proxy": "http://ec2-54-163-104-129.compute-1.amazonaws.com:8080"
 }

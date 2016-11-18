@@ -79,7 +79,8 @@ class PatientList extends Component {
         </div>
 
         <PatientTable patientList={this.state.filteredList}
-                      setRightSide={this.props.actions.setRightSide} />
+                      setRightSide={this.props.actions.setRightSide}
+                      flagged={this.props.ui.showFlagged} />
       </div>
     );
   }

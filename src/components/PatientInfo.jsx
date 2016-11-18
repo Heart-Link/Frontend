@@ -9,6 +9,7 @@ class PatientInfo extends Component {
     this.showPatientDetail = this.showPatientDetail.bind(this);
     this.openInbox = this.openInbox.bind(this);
     this.closeInbox = this.closeInbox.bind(this);
+    this.toggleFlag = this.toggleFlag.bind(this);
 
     this.state = {
       inbox: false
@@ -25,8 +26,20 @@ class PatientInfo extends Component {
       token: this.props.userInfo.jwt
     });
   }
+  
+  toggleFlag () {
+    this.props.actions.toggleFlag({ 
+      id: this.props.ui.rightSideData.pid,
+      token: this.props.userInfo.jwt
+    })
+  }
 
   openInbox () {
+    this.props.actions.getMessages({ 
+      id: this.props.ui.rightSideData.pid,
+      token: this.props.userInfo.jwt
+    });
+
     this.setState({ inbox: true });
   }
 
@@ -83,8 +96,44 @@ class PatientInfo extends Component {
     return <div className="MediumIcon"/>
   }
 
+  renderProviderButton () {
+    if (this.props.userInfo.isDoctor) {
+      if (this.props.ui.rightSideData.isFlagged) {
+        return (
+          <button className="Btn-med Btn-left Btn-norm"
+                  onClick={this.toggleFlag} >
+            Unflag Patient
+          </button>
+        )
+      }
+
+      return;
+    }
+
+    //For Nurse case manager
+    if (this.props.ui.rightSideData.isFlagged) {
+      return (
+        <button className="Btn-med Btn-left Btn-norm"
+                onClick={this.toggleFlag} >
+          Unflag for Doctor
+        </button>
+      )
+    }
+
+    return (
+      <button className="Btn-med Btn-left Btn-norm"
+              onClick={this.toggleFlag} >
+        Send to Provider
+      </button>
+    )
+  }
+
   renderStats () {
-    if (this.state.inbox) return <Inbox closeInbox={this.closeInbox}/>;
+    if (this.state.inbox) return <Inbox actions={this.props.actions}
+                                        closeInbox={this.closeInbox}
+                                        messageList={this.props.ui.messageList}
+                                        id={this.props.ui.rightSideData.pid} 
+                                        userInfo={this.props.userInfo} />;
 
     return (
       <div>
@@ -121,11 +170,9 @@ class PatientInfo extends Component {
           Update Patient Recommended Values
         </button>
 
-        <button className="Btn-med Btn-left Btn-norm">
-          Send to Provider
-        </button>
+        {this.renderProviderButton()}
 
-        <button className="Btn-med Btn-norm" onClick={this.showPatientDetail}>
+        <button className="Btn-med Btn-norm PatientDetailBtn" onClick={this.showPatientDetail}>
           View Patient Detail
         </button>
       </div>

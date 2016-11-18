@@ -7,5 +7,15 @@
     padding: .5rem
     font-size: 1.6rem
   .Messages
-    .Message
+    .Message, .Message--User, 
+    .Message-Patient, .Message--Other
       color: $PurpleDark
+      width: 50%
+    .Message--User
+      text-align: left
+    .Message-Patient
+      text-align: right
+      background-color: tomato
+    .Message--Other
+      text-align: left
+      background-color: pink

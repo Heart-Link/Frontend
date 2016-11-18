@@ -77,7 +77,8 @@ class CreateAccount extends Component {
           vitalsbph: this.state.bloodPressureHigh,
           vitalsbpl: this.state.bloodPressureLow,
           vitalsweight: this.state.weight,
-        }
+        },
+        token: this.props.userInfo.jwt
       });
 
       this.props.actions.setRightSide({

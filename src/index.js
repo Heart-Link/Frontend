@@ -9,9 +9,6 @@ import { reducer } from './reducers';
 import PatientPortalContainer from './containers/PatientPortalContainer';
 import LoginContainer from './containers/LoginContainer';
 
-import UserService from './services/UserService';
-const userService = new UserService();
-
 import './styles/index.sass';
 
 const initialState = {
@@ -29,6 +26,8 @@ const initialState = {
     leftSideData: {},
     rightSideComponent: null,
     rightSideData: {},
+    showFlagged: false,
+    messageList: []
   }
 };
 

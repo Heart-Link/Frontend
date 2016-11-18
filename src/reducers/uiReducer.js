@@ -24,6 +24,30 @@ const uiReducer = (state = {}, action) => {
         leftSideData: action.payload.data
       });
 
+    case actionTypes.SHOW_FLAGGED:
+      return Object.assign({}, state, {
+        showFlagged: !state.showFlagged
+      });
+
+    case actionTypes.GET_MESSAGES:
+      return Object.assign({}, state, {
+        messageList: action.payload.data
+      });
+
+    case actionTypes.SEND_MESSAGE:
+      const newMessagePayload = {
+        convoid: action.payload.messenger,
+        message: action.payload.message,
+        messengerid: action.payload.messenger,
+      };
+
+      let currMessageList = state.messageList;
+      currMessageList.push(newMessagePayload);
+
+      return Object.assign({}, state, {
+        messageList: currMessageList
+      });
+
     default:
       return state;
   }

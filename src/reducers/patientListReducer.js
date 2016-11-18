@@ -25,13 +25,26 @@ const patientListReducer = (state = [], action) => {
           stressLevel: '--',
           weight: '--'
         },
-        message: null
+        message: null,
       };
 
       const currPatientList = state;
       return Object.assign([], state, {
         patientList: currPatientList.push(createPatientPayload)
       });
+
+    case actionTypes.TOGGLE_FLAG:
+      const currPatientList2 = state;
+      
+      currPatientList2.map((patient) => {
+        if (patient.pid === action.payload.id) {
+          patient.isFlagged = !patient.isFlagged;
+        }
+      });
+
+      return Object.assign([], state, {
+        patientList: currPatientList2
+      })      
 
     default: 
       return state;

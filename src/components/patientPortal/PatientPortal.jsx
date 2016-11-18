@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { browserHistory } from 'react-router';
 import Alert from '../Alert';
 import Navbar from '../Navbar';
 import PatientList from '../PatientList';
@@ -9,6 +10,12 @@ class PatientPortal extends Component {
     super();
 
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentWillMount () {
+    if(this.props.userInfo.jwt === null) {
+      browserHistory.push('/'); 
+    }
   }
 
   alerts () {
@@ -41,7 +48,9 @@ class PatientPortal extends Component {
     return (
       <div className="PatientPortal">
         {this.alerts()}
-        <Navbar actions={this.props.actions} />
+        <Navbar actions={this.props.actions} 
+                userInfo={this.props.userInfo}
+                ui={this.props.ui} />
 
         <div className="PatientPortal-leftSide">
           {this.leftSide()}

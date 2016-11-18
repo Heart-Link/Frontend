@@ -19,8 +19,19 @@ class PatientTable extends Component {
   }
 
   componentWillUpdate (nextProps) {
-    if(this.props.patientList === nextProps.patientList) return;
-    this.setState({ patientList: nextProps.patientList });
+    if (this.props.flagged !== nextProps.flagged || this.props.patientList !== nextProps.patientList) {
+      if(nextProps.flagged === true) {
+        let flaggedUsers = [];
+
+        nextProps.patientList.map((patient) => {
+          if (patient.isFlagged === true) flaggedUsers.push(patient);
+        })
+
+        this.setState({ patientList: flaggedUsers });
+      } else {
+        this.setState({ patientList: nextProps.patientList });
+      }
+    }
   }
 
   patientIDClickHandler (event) {

@@ -8,6 +8,7 @@ class Navbar extends Component {
     super();
 
     this.createAccountHandler = this.createAccountHandler.bind(this);
+    this.flaggedUserHandler = this.flaggedUserHandler.bind(this);
   }
 
   createAccountHandler () {
@@ -22,27 +23,61 @@ class Navbar extends Component {
     });
   }
 
+  flaggedUserHandler () {
+    this.props.actions.showFlagged();
+  }
+
+  renderFlaggedNavbar () {
+    if (this.props.ui.showFlagged === true) {
+      return (
+        <li><a onClick={this.flaggedUserHandler}>All Users</a></li>
+      )
+    }
+
+    return (<li><a onClick={this.flaggedUserHandler}>Flagged Users</a></li>);
+  }
+
+  renderNavigation () {
+    if (this.props.userInfo.isDoctor) {
+      return (
+        <div className="Navbar-navigation">
+          <ul>
+            {this.renderFlaggedNavbar()}
+            <li><a onClick={this.createAccountHandler}>Create Account</a></li>
+            <li><Link to={'/'}>Log Out</Link></li>
+          </ul>
+        </div>
+      );
+    }
+
+    return (
+      <div className="Navbar-navigation">
+        <ul>
+          <li><a onClick={this.createAccountHandler}>Create Account</a></li>
+          <li><Link to={'/'}>Log Out</Link></li>
+        </ul>
+      </div>
+    )
+  }
+
   render () {
     return (
       <div className="Navbar">
         <div className="Navbar-logo">
           <Logo />
-          <h3>Heart Link</h3>
+          <h3>Heart Link: {this.props.userInfo.userName}</h3>
         </div>
 
-        <div className="Navbar-navigation">
-          <ul>
-            <li><a onClick={this.createAccountHandler}>Create Account</a></li>
-            <li><Link to={'/'}>Log Out</Link></li>
-          </ul>
-        </div>
+        {this.renderNavigation()}
+
       </div>
     );
   }
 };
 
 Navbar.propTypes = {
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  userInfo: PropTypes.object
 };
 
 export default Navbar;

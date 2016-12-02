@@ -4,8 +4,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 
 class CreateAccount extends Component {
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
 
     this.closePage = this.closePage.bind(this);
     this.submitForm = this.submitForm.bind(this);
@@ -23,37 +23,74 @@ class CreateAccount extends Component {
     this.handleWeightChange = this.handleWeightChange.bind(this);
     this.handleMaleSexChange = this.handleMaleSexChange.bind(this);
     this.handleFemaleSexChange = this.handleFemaleSexChange.bind(this);
+    this.handleProviderChange = this.handleProviderChange.bind(this);
 
-    this.state = {
-      isLoading: false,
-      formAttempted: false,
-      formValid: false,
-      firstName: '',
-      firstNameValid: false,
-      lastName: '',
-      lastNameValid: false,
-      patientID: '',
-      patientIDValid: false,
-      email: '',
-      emailValid: false,
-      bloodPressureHigh: '',
-      bloodPressureHighValid: false,
-      bloodPressureLow: '',
-      bloodPressureLowValid: false,
-      steps: '',
-      stepsValid: false,
-      exercise: '',
-      exerciseValid: false,
-      heartRate: '',
-      heartRateValid: false,
-      alcoholIntake: '',
-      alcoholIntakeValid: false,
-      weight: '',
-      weightValid: false,
-      dob: '',
-      startDate: moment(),
-      sex: '',
-      sexValid: false,
+    if (this.props.ui.rightSideData === null) {
+      this.state = {
+        isLoading: false,
+        formAttempted: false,
+        formValid: false,
+        firstName: '',
+        firstNameValid: false,
+        lastName: '',
+        lastNameValid: false,
+        patientID: '',
+        patientIDValid: false,
+        email: '',
+        emailValid: false,
+        bloodPressureHigh: '',
+        bloodPressureHighValid: false,
+        bloodPressureLow: '',
+        bloodPressureLowValid: false,
+        steps: '',
+        stepsValid: false,
+        exercise: '',
+        exerciseValid: false,
+        heartRate: '',
+        heartRateValid: false,
+        alcoholIntake: '',
+        alcoholIntakeValid: false,
+        weight: '',
+        weightValid: false,
+        dob: '',
+        startDate: moment(),
+        sex: '',
+        sexValid: false,
+        provider: '',
+      }
+    } else {
+      this.state = {
+        isLoading: false,
+        formAttempted: false,
+        formValid: false,
+        firstName: this.props.ui.rightSideData.firstName,
+        firstNameValid: false,
+        lastName: this.props.ui.rightSideData.lastName,
+        lastNameValid: false,
+        patientID: this.props.ui.rightSideData.pid,
+        patientIDValid: false,
+        email: this.props.ui.rightSideData.patientemail,
+        emailValid: false,
+        bloodPressureHigh: this.props.ui.rightSideData.vitalsbph,
+        bloodPressureHighValid: false,
+        bloodPressureLow: this.props.ui.rightSideData.vitalsbpl,
+        bloodPressureLowValid: false,
+        steps: this.props.ui.rightSideData.steps,
+        stepsValid: false,
+        exercise: this.props.ui.rightSideData.exercisetime,
+        exerciseValid: false,
+        heartRate: this.props.ui.rightSideData.vitalsbpm,
+        heartRateValid: false,
+        alcoholIntake: this.props.ui.rightSideData.vitalsalcohol,
+        alcoholIntakeValid: false,
+        weight: this.props.ui.rightSideData.weight,
+        weightValid: false,
+        dob: this.props.ui.rightSideData.dob,
+        startDate: moment(),
+        sex: this.props.ui.rightSideData.sex,
+        sexValid: false,
+        provider: this.props.ui.rightSideData.provider,
+      }
     }
   }
 
@@ -68,7 +105,7 @@ class CreateAccount extends Component {
           firstname: this.state.firstName,
           gender: this.state.sex,
           lastname: this.state.lastName,
-          managerid: 'abc',
+          managerid: this.props.userInfo.providerid,
           patientemail: this.state.email,
           providerid: 'def',
           status: 5,
@@ -183,11 +220,15 @@ class CreateAccount extends Component {
   }
 
   handleDateChange (date) {
-    this.setState({ dob: this.state.startDate.format() });
+    this.setState({ startDate: date });
   }
 
   handleEmailChange (event) {
     this.setState({ email: event.target.value });
+  }
+
+  handleProviderChange (event) {
+    this.setState({ provider: event.target.value });
   }
 
   handleBloodPressureHighChange (event) {
@@ -282,6 +323,8 @@ class CreateAccount extends Component {
 
             <h6>Provider:</h6>
               <input type="text"
+                     onChange={this.handleProviderChange}
+                     value={this.state.provider}
                      ref="provider" />
 
             <h6>Sex:</h6>
@@ -296,7 +339,7 @@ class CreateAccount extends Component {
           </div>
         </div>
 
-        <div className="CreateAccount-HealthInfo Card">
+        <div className="`Create`Account-HealthInfo Card">
           <div className="Card-left">
             <h6 className="noMargin">Blood Pressure:</h6>
               <input className={(this.state.formAttempted && !this.state.bloodPressureHighValid) ? "small-input-bp input-error" : "small-input-bp"}

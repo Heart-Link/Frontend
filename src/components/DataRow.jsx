@@ -40,7 +40,7 @@ const DataRow = (props) => {
       <p>{props.dailyEntry.averageHR}</p>
       <p>{props.dailyEntry.stressLevel}</p>
       <p>{props.dailyEntry.alcoholIntake}</p>
-      <p>{props.dailyEntry.smoke}</p>
+      <p>{(props.dailyEntry.smoke) ? 'True' : 'False'}</p>
       <p>{props.dailyEntry.weight}</p>
     </div>
   );

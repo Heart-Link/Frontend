@@ -98,7 +98,7 @@ class Login extends Component {
         
         <div className="Inputs">
           <input type="text" onChange={this.onChangeEmail} placeholder="Username"/>
-          <input type="text" onChange={this.onChangePassword} placeholder="Password"/>
+          <input type="password" onChange={this.onChangePassword} placeholder="Password"/>
         </div>
         
         <div className="BackBtn">

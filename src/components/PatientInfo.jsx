@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Detail from './Detail';
 import Inbox from './Inbox';
+import CreateAccount from './CreateAccount';
 
 class PatientInfo extends Component {
   constructor () {
@@ -10,6 +11,7 @@ class PatientInfo extends Component {
     this.openInbox = this.openInbox.bind(this);
     this.closeInbox = this.closeInbox.bind(this);
     this.toggleFlag = this.toggleFlag.bind(this);
+    this.updatePatient = this.updatePatient.bind(this);
 
     this.state = {
       inbox: false
@@ -25,6 +27,13 @@ class PatientInfo extends Component {
       id: this.props.ui.rightSideData.pid,
       token: this.props.userInfo.jwt
     });
+  }
+
+  updatePatient () {
+    this.props.actions.setRightSide({
+      component: CreateAccount,
+      data: this.props.ui.rightSideData
+    })
   }
   
   toggleFlag () {
@@ -138,7 +147,7 @@ class PatientInfo extends Component {
     return (
       <div>
         <div className="PatientInfo-Messages Card">
-          <h5>Messages: 1</h5>
+          <h5>Messages: {this.props.ui.rightSideData.messagecount}</h5>
           <button className="Btn-norm" onClick={this.openInbox}>
             Open Inbox
           </button>
@@ -166,7 +175,7 @@ class PatientInfo extends Component {
           </div>
         </div>
 
-        <button className="Btn-large Btn-norm">
+        <button className="Btn-large Btn-norm" onClick={this.updatePatient}>
           Update Patient Recommended Values
         </button>
 

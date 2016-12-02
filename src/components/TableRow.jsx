@@ -21,7 +21,7 @@ const TableRow = (props) => {
       <p>{props.patient.lastName + ', ' + props.patient.firstName}</p>
       <div className="icon">{renderStatusIcon()}</div>
       <p>{props.patient.provider}</p>
-      <p>0</p>
+      <p>{props.patient.messagecount}</p>
     </div>
   );
 }

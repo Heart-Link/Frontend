@@ -6,16 +6,32 @@
     color: $PurpleDark
     padding: .5rem
     font-size: 1.6rem
-  .Messages
-    .Message, .Message--User, 
-    .Message-Patient, .Message--Other
-      color: $PurpleDark
+
+.Messages-individual
+  max-height: 200px
+  overflow-y: scroll
+  .Message, .Message--User, 
+  .Message--Patient, .Message--Other
+    display: inline-block
+    width: 100%
+    p
+      color: $White
       width: 50%
-    .Message--User
-      text-align: left
-    .Message-Patient
+      padding: 5px
+
+  .Message--User
+    p
+      float: right
       text-align: right
-      background-color: tomato
-    .Message--Other
+      background-color: $PurpleDark
+      color: $White
+  .Message--Patient
+    p
+      float: left
       text-align: left
-      background-color: pink
+      background-color: $GreenDark
+  .Message--Other
+    p
+      text-align: right
+      background-color: $GreenLight
+

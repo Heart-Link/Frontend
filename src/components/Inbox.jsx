@@ -16,12 +16,19 @@ class Inbox extends Component {
     if (this.props.messageList.length === 0) return <p>No Messages</p>
 
     return this.props.messageList.map((message, index) => {
-      if (message.messengerid = this.props.userInfo.providerID) {
-        return <p className="Message--User" key={index}>{message.message}</p>
-      } else if (message.messengerid = this.props.id) {
-        return <p className="Message--Patient" key={index}>{message.message}</p>
+      if (message.messengerid === this.props.userInfo.providerID) {
+        return  <div className="Message--User" key={index}>
+                  <p>{message.message}</p>
+                </div>
+
+      } else if (message.messengerid === this.props.id) {
+        return  <div  className="Message--Patient" key={index}>
+                  <p>{message.message}</p>
+                </div>  
       } else {
-        return <p className="Message-Other" key={index}>{message.message}</p>
+        return  <div className="Message-Other" key={index}>
+                  <p>{message.message}</p>
+                </div>
       }
     })
   }
@@ -48,7 +55,9 @@ class Inbox extends Component {
     return (
       <div className="Inbox">
         <div className="Messages Card">
-          {this.renderMessages()}
+          <div className="Messages-individual">
+            {this.renderMessages()}
+          </div>
           <textarea rows="4" placeholder="Type your message here..." ref="message"/>
         </div>
 

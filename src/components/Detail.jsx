@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import DataTable from './DataTable';
-import {XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalGridLines, AreaSeries} from 'react-vis';
+import {XYPlot, XAxis, YAxis, HorizontalGridLines, Hint, VerticalGridLines, AreaSeries} from 'react-vis';
 
 class Detail extends Component {
   constructor (props) {
@@ -15,7 +15,6 @@ class Detail extends Component {
     this.onClickAlcohol = this.onClickAlcohol.bind(this);
     this.onClickSmoking = this.onClickSmoking.bind(this);
     this.onClickWeight = this.onClickWeight.bind(this);
-    this.onClickDaily = this.onClickDaily.bind(this);
 
     this.state = {
       currentData: 'Overall',
@@ -27,7 +26,6 @@ class Detail extends Component {
       alcoholData: null,
       smokingData: null,
       weightData: null,
-      dailyData: null,
     }
   }
 
@@ -126,7 +124,8 @@ class Detail extends Component {
       currentData: 'Smoking',
       dropdownOpen: false,
       smokingData: this.props.ui.leftSideData.map((dataEntry, index) => {
-                     return { x: index, y: dataEntry.smoke }
+                     var individualEntry = (dataEntry.smoke) ? 1 : 0;
+                     return { x: index, y: individualEntry}
                    })
     });
   }
@@ -143,13 +142,6 @@ class Detail extends Component {
       weightData: this.props.ui.leftSideData.map((dataEntry, index) => {
                     return { x: index, y: dataEntry.weight }
                   })
-    });
-  }
-
-  onClickDaily () {
-    this.setState({
-      currentData: 'Daily',
-      dropdownOpen: false
     });
   }
 
@@ -177,7 +169,6 @@ class Detail extends Component {
         <span onClick={this.onClickAlcohol}>Alcohol</span>
         <span onClick={this.onClickSmoking}>Smoking</span>
         <span onClick={this.onClickWeight}>Weight</span>
-        <span onClick={this.onClickDaily}>Daily</span>
       </div>
     );
   }
@@ -190,8 +181,9 @@ class Detail extends Component {
         } else {
           return (
             <XYPlot
-              width={800}
-              height={400}>
+              width={900}
+              height={500}>
+
               <HorizontalGridLines />
               <VerticalGridLines />
               <AreaSeries
@@ -200,7 +192,7 @@ class Detail extends Component {
               <AreaSeries
                 color="#34A6B3"
                 data={this.state.bpLowData}/>
-              <XAxis title="Date" />
+              <XAxis title="Day" />
               <YAxis title="BPM" />
             </XYPlot>
           );
@@ -212,14 +204,14 @@ class Detail extends Component {
         } else {
           return (
             <XYPlot
-              width={800}
-              height={400}>
+              width={900}
+              height={500}>
               <HorizontalGridLines />
               <VerticalGridLines />
               <AreaSeries
                 color="#5BD1CF"
                 data={this.state.heartRateData}/>
-              <XAxis title="Date" />
+              <XAxis title="Day" />
               <YAxis title="BPM" />
             </XYPlot>
           );
@@ -231,14 +223,14 @@ class Detail extends Component {
         } else {
           return (
             <XYPlot
-              width={800}
-              height={400}>
+              width={900}
+              height={500}>
               <HorizontalGridLines />
               <VerticalGridLines />
               <AreaSeries
                 color="#5BD1CF"
                 data={this.state.stressData}/>
-              <XAxis title="Date" />
+              <XAxis title="Day" />
               <YAxis title="Stress Level" />
             </XYPlot>
           );
@@ -250,14 +242,14 @@ class Detail extends Component {
         } else {
           return (
             <XYPlot
-              width={800}
-              height={400}>
+              width={900}
+              height={500}>
               <HorizontalGridLines />
               <VerticalGridLines />
               <AreaSeries
                 color="#5BD1CF"
                 data={this.state.alcoholData}/>
-              <XAxis title="Date" />
+              <XAxis title="Day" />
               <YAxis title="Alcohol" />
             </XYPlot>
           );
@@ -269,14 +261,14 @@ class Detail extends Component {
         } else {
           return (
             <XYPlot
-              width={800}
-              height={400}>
+              width={900}
+              height={500}>
               <HorizontalGridLines />
               <VerticalGridLines />
               <AreaSeries
                 color="#5BD1CF"
-                data={this.state.smokeingData}/>
-              <XAxis title="Date" />
+                data={this.state.smokingData}/>
+              <XAxis title="Day" />
               <YAxis title="Smoking" />
             </XYPlot>
           );
@@ -288,23 +280,18 @@ class Detail extends Component {
         } else {
           return (
             <XYPlot
-              width={800}
-              height={400}>
+              width={900}
+              height={500}>
               <HorizontalGridLines />
               <VerticalGridLines />
               <AreaSeries
                 color="#5BD1CF"
                 data={this.state.weightData}/>
-              <XAxis title="Date" />
+              <XAxis title="Day" />
               <YAxis title="Weight (lbs)" />
             </XYPlot>
           );
         }
-      
-      case 'Daily':
-        return (
-          <div>Daily</div>
-        );
       
       case 'Overall':
       default:

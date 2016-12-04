@@ -13,11 +13,13 @@ class Calendar extends Component{
   }
 
   handleDateChange(date){
-    this.props.func(date);
+    if(date === this.state.startDate){
+      this.props.func(this.state.startDate);
+    }
+      this.props.func(date);
   }
   render(){
     return <DatePicker inline
-              todayButton={"Today"}
               selected={this.state.startDate}
               onChange={this.handleDateChange} />;
   }

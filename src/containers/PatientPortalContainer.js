@@ -7,7 +7,9 @@ import PatientPortal from '../components/patientPortal/PatientPortal';
 
 const mapStateToProps = (state) => {
   return {
-    ui: state.uiReducer
+    patientList: state.patientListReducer,
+    ui: state.uiReducer,
+    userInfo: state.userInfoReducer
   }
 };
 

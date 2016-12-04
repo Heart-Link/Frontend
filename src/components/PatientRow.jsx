@@ -4,7 +4,15 @@ class PatientRow extends Component{
   constructor(){
     super();
     this.handleChange = this.handleChange.bind(this);
+    this.renderStatusIcon = this.renderStatusIcon.bind(this);
   }
+
+
+  renderStatusIcon() {
+    if (this.props.status < 5) return <div className='WarningIcon'/>
+    if(this.props.status > 7) return <div className='GoodIcon'/>
+    return <div className='MediumIcon'/>
+  };
 
   handleChange(){
     this.props.openPatientSummary(this.props.id)
@@ -12,15 +20,16 @@ class PatientRow extends Component{
   render(){
     return(
       <div className="PatientRow">
-        <p className="PatientName" onClick={this.handleChange}>{this.props.firstname + " " + this.props.lastname}</p>
-        <p className="PatientStatus">{this.props.status}</p>
+        <p className="PatientName" onClick={this.handleChange}>{this.props.firstName + " " + this.props.lastName}</p>
+        <div className='PatientStatus'>{this.renderStatusIcon()}</div>
       </div>
     );
   }
 }
+
 PatientRow.propTypes = {
-  firstname: PropTypes.string.isRequired,
-  lastname: PropTypes.string.isRequired,
+  firstName: PropTypes.string.isRequired,
+  lastName: PropTypes.string.isRequired,
   status: PropTypes.number.isRequired,
   openPatientSummary: PropTypes.func
 };

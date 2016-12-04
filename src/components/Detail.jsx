@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Calendar from './Calendar';
 import DataTable from './DataTable';
 import DayDetail from './DayDetail';
+import Alert from './Alert';
+import moment from 'moment';
 
 class Detail extends Component{
   constructor(){
@@ -27,11 +29,42 @@ class Detail extends Component{
     this.resetCalendarView = this.resetCalendarView.bind(this);
   }
 
+  alerts(){
+    if(!this.props.ui.alertMessage) return;
+
+    return <Alert message={this.props.ui.alertMessage}
+                  sendAlert={this.props.actions.sendAlert} />;
+  }
+
+//Incoming date is a date object as a string
+//In order to compare, must make aa moment object from that string
   dateClick(date){
-   this.setState({
-      chosenDate: date,
-      dayDetail: true
+    const today = moment();
+    let chosen = moment(date);
+
+    let matchingEntry = this.searchEntries(chosen);
+
+    if(chosen.isAfter(today) || matchingEntry === undefined){
+      this.props.actions.sendAlert({message: 'Data not available for this date.'});
+    } else{
+      this.setState({
+         chosenDate: matchingEntry,
+         dayDetail: true
+       });
+    }
+  }
+
+  searchEntries(dateAsMoment){
+
+    //Find method will loop through each entry in the detailedData array and find
+    //the first entry that matches the requested date by day.
+    //If none are found, the matchingEntry variable is undefined.
+    let temp = this.props.ui.detailData.find((dataEntry) =>{
+      let entryMoment = moment(dataEntry.entryInfo);
+      return dateAsMoment.isSame(entryMoment, 'day');
     });
+
+    return temp;
   }
 
   resetCalendarView(){
@@ -120,29 +153,37 @@ class Detail extends Component{
       dayDetail: false
     });
   }
+
   renderView(){
+    let table=[];
     switch(this.state.currentData){
       case 'Blood Pressure':
-        return(<DataTable />);
+          table = this.props.ui.detailData.filter((dataEntry)=>((dataEntry.bpHigh > 0) && (dataEntry.bpLow > 0)));
+        return(<DataTable data={table} requestedData={this.state.currentData} />);
 
       case 'Heart Rate':
-        return(<DataTable />);
+          table = this.props.ui.detailData.filter((dataEntry)=>dataEntry.averageHR > 0);
+        return(<DataTable data={table} requestedData={this.state.currentData} />);
 
       case 'Stress':
-        return(<DataTable />);
+          table = this.props.ui.detailData.filter((dataEntry)=>dataEntry.stressLevel > 0);
+        return(<DataTable data={table} requestedData={this.state.currentData} />);
 
       case 'Alcohol':
-        return(<DataTable />);
+          table = this.props.ui.detailData.filter((dataEntry)=>dataEntry.alcoholIntake > 0);
+        return(<DataTable data={table} requestedData={this.state.currentData} />);
 
       case 'Smoking':
-        return(<DataTable />);
+          table = this.props.ui.detailData.filter((dataEntry)=>dataEntry.smoke >= 0);
+        return(<DataTable data={table} requestedData={this.state.currentData} />);
 
       case 'Weight':
-        return(<DataTable />);
+          table = this.props.ui.detailData.filter((dataEntry)=>dataEntry.weight > 0);
+        return(<DataTable data={table} requestedData={this.state.currentData} />);
 
       default:
         if(this.state.dayDetail){
-          return(<DayDetail back={this.resetCalendarView} date={this.state.chosenDate}/>);
+          return(<DayDetail back={this.resetCalendarView} dateEntry={this.state.chosenDate} />);
         }
         else{
           return(<Calendar func={this.dateClick}/>);
@@ -152,7 +193,7 @@ class Detail extends Component{
   render(){
     return(
       <div className='Detail'>
-        {/*<p onClick={this.props.handlePatientDetailClick}>{'< Latest Input'}</p>*/}
+        {this.alerts()}
         {this.renderDropdown()}
         {this.renderView()}
       </div>

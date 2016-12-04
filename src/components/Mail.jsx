@@ -1,9 +1,10 @@
 import React from 'react';
 import mail from '../styles/img/Mail.png';
 
-const Mail = () => {
+const Mail = (props) => {
+
   return(
-    <img className="Mail" src={mail}/>
+    <img className="Mail" src={mail} onClick={props.openMessages}/>
   );
 }
 

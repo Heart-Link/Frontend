@@ -8,8 +8,21 @@
       padding-bottom: 2rem
       .Headers
         color: $GrayLight
-      span
-        padding: 6%
+        p
+          display: inline-block
+          width: 25%
+      .Info
+        p
+          display: inline-block
+          width: 25%
+        .status
+          padding: 0 10%
+          display: inline-block
+          vertical-align: middle
+          width: 25%
+
+  .NoEntries
+    text-align: center
 
   .BottomHalf
     padding-top: 3%
@@ -31,13 +44,19 @@
       .LeftSide
         width: 50%
         float: left
+        div
+          width: 50%
+          display: inline-block
         p
-          padding-top: 20%
+          padding: 20% 0
       .RightSide
         width: 50%
         float: right
+        div
+          width: 50%
+          display: inline-block
         p
-          padding-top: 20%
+          padding: 20% 0
     .Checklist
       text-align: center
       padding-top: 5%

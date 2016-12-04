@@ -17,19 +17,24 @@ class PatientList extends Component {
     this.handleUserInput = this.handleUserInput.bind(this);
   }
 
+  componentWillUpdate(nextProps){
+    if(this.props.patientList === nextProps.patientList) return;
+    this.setState({filterList: nextProps.patientList});
+  }
+
   handleUserInput(event){
     this.setState({
       filterText:event.target.value
     });
     if(event.target.value <= 0){
       this.setState({
-        filterList: this.state.patientsList
+        filterList: this.props.patientList
       });
     }
     this.setState({
       filterList: this.props.patientList.filter((patient)=>{
         return(
-          (patient.firstname + patient.lastname + patient.id).toLowerCase().match(event.target.value.trim().toLowerCase())
+          (patient.firstName + patient.lastName + patient.pid).toLowerCase().match(event.target.value.trim().toLowerCase())
         );
       })
     });
@@ -42,8 +47,8 @@ class PatientList extends Component {
         this.setState({
           direction: 1,
           filterList: this.state.filterList.sort((a,b) =>{
-            const nameA = (a.lastname + a.firstname).toLowerCase();
-            const nameB = (b.lastname + b.firstname).toLowerCase();
+            const nameA = (a.lastName + a.firstName).toLowerCase();
+            const nameB = (b.lastName + b.firstName).toLowerCase();
 
             if(nameA > nameB) return -1;
             if(nameA < nameB) return 1;
@@ -55,8 +60,8 @@ class PatientList extends Component {
         this.setState({
           direction: 0,
           filterList: this.state.filterList.sort((a,b) =>{
-            const nameA = (a.lastname + a.firstname).toLowerCase();
-            const nameB = (b.lastname + b.firstname).toLowerCase();
+            const nameA = (a.lastName + a.firstName).toLowerCase();
+            const nameB = (b.lastName + b.firstName).toLowerCase();
 
             if(nameA < nameB) return -1;
             if(nameA > nameB) return 1;
@@ -110,12 +115,10 @@ class PatientList extends Component {
 
   fullViewOrNurseView(){
     if(!this.props.fullView){
-      let nurseRecommend = this.props.patientList.filter((patient)=>patient.nurseFlag);
-      return <PatientTable patientList={nurseRecommend}
-        openPatientSummary={this.props.openPatientSummary}/>
+      let nurseRecommend = this.state.filterList.filter((patient)=>patient.isFlagged);
+      return <PatientTable patientList={nurseRecommend} openPatientSummary={this.props.openPatientSummary}/>
     }
-    return <PatientTable patientList={this.state.filterList}
-      openPatientSummary={this.props.openPatientSummary}/>
+    return <PatientTable patientList={this.state.filterList} openPatientSummary={this.props.openPatientSummary}/>
   }
 
   render () {

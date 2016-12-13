@@ -10,9 +10,9 @@ const patientListReducer = (state = [], action) => {
         firstName: action.payload.data.firstname,
         lastName: action.payload.data.lastname,
         pid: action.payload.data.emrid,
-        provider: action.payload.data.providerid,
+        provider: action.payload.data.provider,
         sex: action.payload.data.gender,
-        dob: action.payload.data.dob,
+        dob: action.payload.data.dob.format('YYYY/MM/DD'),
         lastInput: {
           alcoholIntake: '--',
           averageHR: '--',
@@ -26,6 +26,7 @@ const patientListReducer = (state = [], action) => {
           weight: '--'
         },
         message: null,
+        messagecount: 0
       };
 
       const currPatientList = state;

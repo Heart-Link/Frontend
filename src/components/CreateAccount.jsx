@@ -98,7 +98,7 @@ class CreateAccount extends Component {
     if (this.state.formValid) {
       this.props.actions.createAccount({
         data: {
-          dob: this.state.dob,
+          dob: this.state.startDate,
           emrid: this.state.patientID,
           email: this.state.email,
           exercisetime: this.state.exercise,
@@ -107,13 +107,15 @@ class CreateAccount extends Component {
           lastname: this.state.lastName,
           managerid: this.props.userInfo.providerid,
           patientemail: this.state.email,
-          providerid: 'def',
+          provider: this.state.provider,
           status: 5,
           steps: this.state.steps,
+          vitalsbpm: this.state.vitalsbpm,
           vitalsalcohol: this.state.alcoholIntake,
           vitalsbph: this.state.bloodPressureHigh,
           vitalsbpl: this.state.bloodPressureLow,
           vitalsweight: this.state.weight,
+          providerid: this.props.userInfo.providerID,
         },
         token: this.props.userInfo.jwt
       });
@@ -129,7 +131,6 @@ class CreateAccount extends Component {
         formValid: this.formValid(),
         isLoading: false
       });
-      this.props.actions.sendAlert({ message: 'Incorrect data in form. Please try again.' });
     }
   }
 
